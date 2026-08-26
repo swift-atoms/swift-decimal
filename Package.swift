@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-decimal-primitives",
+    name: "swift-decimal",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -12,16 +12,16 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(name: "Decimal Primitives", targets: ["Decimal Primitives"]),
+        .library(name: "Decimal", targets: ["Decimal"]),
         .library(
-            name: "Decimal Primitives Test Support",
-            targets: ["Decimal Primitives Test Support"]
+            name: "Decimal Test Support",
+            targets: ["Decimal Test Support"]
         ),
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Decimal Primitives",
+            name: "Decimal",
             dependencies: [],
             swiftSettings: [
                 .enableUpcomingFeature("ExistentialAny"),
@@ -31,17 +31,17 @@ let package = Package(
             ]
         ),
         .target(
-            name: "Decimal Primitives Test Support",
+            name: "Decimal Test Support",
             dependencies: [
-                "Decimal Primitives"
+                "Decimal"
             ],
             path: "Tests/Support"
         ),
         .testTarget(
-            name: "Decimal Primitives Tests",
+            name: "Decimal Tests",
             dependencies: [
-                "Decimal Primitives",
-                "Decimal Primitives Test Support",
+                "Decimal",
+                "Decimal Test Support",
             ]
         ),
     ],

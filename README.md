@@ -1,4 +1,4 @@
-# Decimal Primitives
+# Decimal
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
 
@@ -11,7 +11,7 @@ IEEE 754-2008 decimal floating-point value types for Swift: the 32-, 64-, and 12
 `Decimal` is a family of IEEE 754-2008 decimal floating-point value types — `Format32`, `Format64`, and `Format128` — together with the vocabulary that describes them. Each format is a thin wrapper over its raw BID (Binary Integer Decimal) bit pattern, so values are bit-exact and trivially `Sendable`, `Hashable`, and copyable. The package supplies the encodings, classification, and integer conversions; it does not impose an arithmetic policy.
 
 ```swift
-import Decimal_Primitives
+import Decimal
 
 // A 64-bit decimal, built exactly from an integer (for example, a price in cents).
 let price = Decimal.Format64(1_499 as Int64)
@@ -32,7 +32,7 @@ let n = Int64(exactly: price)     // Optional(1499)
 Each format conforms to `Decimal.Layout`, which exposes its precision, exponent range, and bias. You can assemble a finite value from its sign, exponent, and coefficient, then read those parts back without loss.
 
 ```swift
-import Decimal_Primitives
+import Decimal
 
 // Three IEEE 754-2008 interchange formats, each conforming to Decimal.Layout.
 print(Int(Decimal.Format32.precision))   // 7
@@ -51,7 +51,7 @@ print(Int(value.extractExponent()))      // -2
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-primitives/swift-decimal-primitives.git", branch: "main")
+    .package(url: "https://github.com/swift-molecules/swift-decimal.git", branch: "main")
 ]
 ```
 
@@ -59,7 +59,7 @@ dependencies: [
 .target(
     name: "App",
     dependencies: [
-        .product(name: "Decimal Primitives", package: "swift-decimal-primitives"),
+        .product(name: "Decimal", package: "swift-decimal"),
     ]
 )
 ```
@@ -74,8 +74,8 @@ Two library products, with no dependencies outside the Swift standard library.
 
 | Product | Target | Purpose |
 |---------|--------|---------|
-| `Decimal Primitives` | `Sources/Decimal Primitives/` | The `Decimal` namespace: the `Format32`, `Format64`, and `Format128` BID-encoded types; the `Decimal.Layout` protocol; and the supporting value types `Class`, `Sign`, `NaN`, `Compare`, `Order`, `Exponent`, `Precision`, and `Payload`. |
-| `Decimal Primitives Test Support` | `Tests/Support/` | Re-exports the main target for test consumers. |
+| `Decimal` | `Sources/Decimal/` | The `Decimal` namespace: the `Format32`, `Format64`, and `Format128` BID-encoded types; the `Decimal.Layout` protocol; and the supporting value types `Class`, `Sign`, `NaN`, `Compare`, `Order`, `Exponent`, `Precision`, and `Payload`. |
+| `Decimal Test Support` | `Tests/Support/` | Re-exports the main target for test consumers. |
 
 Foundation-free.
 

@@ -1,8 +1,8 @@
 import Testing
 
-@testable import Decimal_Primitives
+@testable import Decimal
 
-extension Decimal.Format32 {
+extension Decimal.Format64 {
     @Suite struct `BID Round Trip` {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
@@ -10,13 +10,13 @@ extension Decimal.Format32 {
     }
 }
 
-extension Decimal.Format32.`BID Round Trip`.`Edge Case` {
+extension Decimal.Format64.`BID Round Trip`.`Edge Case` {
 
     @Test func formTwoFiniteValueIsNotMisreadAsSpecial() {
 
-        let exponent = Decimal.Exponent(49)
-        let coefficient = Decimal.Format32.coefficientMax()
-        let encoded = Decimal.Format32.encode(
+        let exponent = Decimal.Exponent(202)
+        let coefficient = Decimal.Format64.coefficientMax()
+        let encoded = Decimal.Format64.encode(
             sign: .positive,
             exponent: exponent,
             coefficient: coefficient
@@ -30,15 +30,15 @@ extension Decimal.Format32.`BID Round Trip`.`Edge Case` {
     }
 
     @Test func roundTripsAcrossFormOneFormTwoCoefficientBoundary() {
-        let exponent = Decimal.Exponent(13)
-        let coefficients: [UInt32] = [
-            (1 << 23) - 1,
-            1 << 23,
-            Decimal.Format32.coefficientMax(),
+        let exponent = Decimal.Exponent(17)
+        let coefficients: [UInt64] = [
+            (1 << 53) - 1,
+            1 << 53,
+            Decimal.Format64.coefficientMax(),
         ]
 
         for coefficient in coefficients {
-            let encoded = Decimal.Format32.encode(
+            let encoded = Decimal.Format64.encode(
                 sign: .positive,
                 exponent: exponent,
                 coefficient: coefficient

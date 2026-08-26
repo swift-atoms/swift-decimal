@@ -1,6 +1,6 @@
 import Testing
 
-@testable import Decimal_Primitives
+@testable import Decimal
 
 extension Decimal.Format32 {
     @Suite struct `Subnormal Classification` {
