@@ -12,37 +12,40 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(name: "Decimal", targets: ["Decimal"]),
         .library(
-            name: "Decimal Test Support",
-            targets: ["Decimal Test Support"]
+            name: "Decimal",
+            targets: ["Decimal"]
+        ),
+        .library(
+            name: "Decimal Standard Library Integration",
+            targets: ["Decimal Standard Library Integration"]
+        ),
+        .library(
+            name: "Decimal Apple Foundation Integration",
+            targets: ["Decimal Apple Foundation Integration"]
         ),
     ],
     dependencies: [],
     targets: [
         .target(
             name: "Decimal",
-            dependencies: [],
-            swiftSettings: [
-                .enableUpcomingFeature("ExistentialAny"),
-                .enableUpcomingFeature("InternalImportsByDefault"),
-                .enableUpcomingFeature("MemberImportVisibility"),
-                .strictMemorySafety(),
-            ]
+            dependencies: []
         ),
         .target(
-            name: "Decimal Test Support",
+            name: "Decimal Standard Library Integration",
+            dependencies: ["Decimal"]
+        ),
+        .target(
+            name: "Decimal Apple Foundation Integration",
             dependencies: [
-                "Decimal"
-            ],
-            path: "Tests/Support"
+                "Decimal",
+                "Decimal Standard Library Integration",
+            ]
         ),
         .testTarget(
             name: "Decimal Tests",
-            dependencies: [
-                "Decimal",
-                "Decimal Test Support",
-            ]
+            dependencies: ["Decimal"],
+            path: "Tests/Decimal Tests"
         ),
     ],
     swiftLanguageModes: [.v6]
