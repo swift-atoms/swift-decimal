@@ -13,10 +13,6 @@ let package = Package(
     ],
     products: [
         .library(name: "Decimal", targets: ["Decimal"]),
-        .library(
-            name: "Decimal Test Support",
-            targets: ["Decimal Test Support"]
-        ),
     ],
     dependencies: [],
     targets: [
@@ -30,18 +26,10 @@ let package = Package(
                 .strictMemorySafety(),
             ]
         ),
-        .target(
-            name: "Decimal Test Support",
-            dependencies: [
-                "Decimal"
-            ],
-            path: "Tests/Support"
-        ),
         .testTarget(
             name: "Decimal Tests",
             dependencies: [
-                "Decimal",
-                "Decimal Test Support",
+                .target(name: "Decimal"),
             ]
         ),
     ],

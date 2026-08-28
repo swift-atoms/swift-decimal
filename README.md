@@ -51,7 +51,7 @@ print(Int(value.extractExponent()))      // -2
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-molecules/swift-decimal.git", branch: "main")
+    .package(url: "https://github.com/swift-atoms/swift-decimal.git", branch: "main")
 ]
 ```
 
@@ -70,12 +70,11 @@ Requires Swift 6.3.1 and macOS 26 / iOS 26 / tvOS 26 / watchOS 26 / visionOS 26 
 
 ## Architecture
 
-Two library products, with no dependencies outside the Swift standard library.
+One library product, with no dependencies outside the Swift standard library.
 
 | Product | Target | Purpose |
 |---------|--------|---------|
 | `Decimal` | `Sources/Decimal/` | The `Decimal` namespace: the `Format32`, `Format64`, and `Format128` BID-encoded types; the `Decimal.Layout` protocol; and the supporting value types `Class`, `Sign`, `NaN`, `Compare`, `Order`, `Exponent`, `Precision`, and `Payload`. |
-| `Decimal Test Support` | `Tests/Support/` | Re-exports the main target for test consumers. |
 
 Foundation-free.
 
