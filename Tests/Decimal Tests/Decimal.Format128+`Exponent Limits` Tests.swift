@@ -1,6 +1,6 @@
 import Testing
 
-@testable import Decimal_Primitives
+@testable import Decimal
 
 extension Decimal.Format128 {
     @Suite struct `Exponent Limits` {

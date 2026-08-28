@@ -1,6 +1,6 @@
 import Testing
 
-@testable import Decimal_Primitives
+@testable import Decimal
 
 @Suite struct Format64BitsTests {
     @Test func zero() {
