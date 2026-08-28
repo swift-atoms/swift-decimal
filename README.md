@@ -51,7 +51,7 @@ print(Int(value.extractExponent()))      // -2
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/swift-atoms/swift-decimal.git", branch: "main")
+    .package(url: "https://github.com/swift-molecules/swift-decimal.git", branch: "main")
 ]
 ```
 
@@ -64,21 +64,20 @@ dependencies: [
 )
 ```
 
-Requires Swift 6.4 and macOS 27 / iOS 27 / tvOS 27 / watchOS 27 / visionOS 27 (or the matching Linux / Windows toolchain).
+Requires Swift 6.3.1 and macOS 26 / iOS 26 / tvOS 26 / watchOS 26 / visionOS 26 (or the matching Linux / Windows toolchain).
 
 ---
 
 ## Architecture
 
-Three library products, with no external package dependencies.
+Two library products, with no dependencies outside the Swift standard library.
 
 | Product | Target | Purpose |
 |---------|--------|---------|
 | `Decimal` | `Sources/Decimal/` | The `Decimal` namespace: the `Format32`, `Format64`, and `Format128` BID-encoded types; the `Decimal.Layout` protocol; and the supporting value types `Class`, `Sign`, `NaN`, `Compare`, `Order`, `Exponent`, `Precision`, and `Payload`. |
-| `Decimal Standard Library Integration` | `Sources/Decimal Standard Library Integration/` | The standard-library integration surface for the Decimal atom. |
-| `Decimal Apple Foundation Integration` | `Sources/Decimal Apple Foundation Integration/` | The Foundation-facing aggregation product. |
+| `Decimal Test Support` | `Tests/Support/` | Re-exports the main target for test consumers. |
 
-Foundation is imported only by the Apple Foundation Integration target.
+Foundation-free.
 
 ---
 
@@ -86,11 +85,10 @@ Foundation is imported only by the Apple Foundation Integration target.
 
 | Platform | Status |
 |----------|--------|
-| macOS 27 | Full support |
+| macOS 26 | Full support |
 | Linux | Full support |
 | Windows | Full support |
-| iOS 27 / tvOS 27 / watchOS 27 / visionOS 27 | Supported |
-| Swift Embedded | Native core supported |
+| iOS / tvOS / watchOS / visionOS | Supported |
 
 ---
 
