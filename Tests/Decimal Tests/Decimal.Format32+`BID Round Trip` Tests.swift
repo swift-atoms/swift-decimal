@@ -3,16 +3,16 @@ import Testing
 @testable import Decimal
 
 extension Decimal.Format32 {
-    @Suite struct `BID Round Trip` {
-        @Suite struct Unit {}
-        @Suite struct `Edge Case` {}
-        @Suite struct Integration {}
+    @Suite struct `Decimal32 BID encoding preserves finite coefficients` {
+        @Suite struct `No Decimal32 BID encoding unit cases are defined` {}
+        @Suite struct `Decimal32 BID round trips preserve coefficients across encoding forms` {}
+        @Suite struct `No Decimal32 BID encoding integration cases are defined` {}
     }
 }
 
-extension Decimal.Format32.`BID Round Trip`.`Edge Case` {
+extension Decimal.Format32.`Decimal32 BID encoding preserves finite coefficients`.`Decimal32 BID round trips preserve coefficients across encoding forms` {
 
-    @Test func formTwoFiniteValueIsNotMisreadAsSpecial() {
+    @Test func `Finite form two encodings preserve their coefficient and normal classification`() {
 
         let exponent = Decimal.Exponent(49)
         let coefficient = Decimal.Format32.coefficientMax()
@@ -29,7 +29,7 @@ extension Decimal.Format32.`BID Round Trip`.`Edge Case` {
         #expect(encoded.extractCoefficient() == coefficient)
     }
 
-    @Test func roundTripsAcrossFormOneFormTwoCoefficientBoundary() {
+    @Test func `Decimal coefficients round trip across BID encoding forms`() {
         let exponent = Decimal.Exponent(13)
         let coefficients: [UInt32] = [
             (1 << 23) - 1,
