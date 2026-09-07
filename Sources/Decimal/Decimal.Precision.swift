@@ -16,22 +16,6 @@ extension Decimal {
     }
 }
 
-extension Decimal.Precision: ExpressibleByIntegerLiteral {
-
-    @inlinable
-    public init(integerLiteral value: Int) {
-        self.rawValue = value
-    }
-}
-
-extension Decimal.Precision: Comparable {
-
-    @inlinable
-    public static func < (lhs: Self, rhs: Self) -> Bool {
-        lhs.rawValue < rhs.rawValue
-    }
-}
-
 extension Decimal.Precision {
 
     @inlinable
@@ -52,14 +36,6 @@ extension Decimal.Precision {
     @inlinable
     public static func - (lhs: Self, rhs: Int) -> Self {
         Self(lhs.rawValue - rhs)
-    }
-}
-
-extension Int {
-
-    @inlinable
-    public init(_ precision: Decimal.Precision) {
-        self = precision.rawValue
     }
 }
 

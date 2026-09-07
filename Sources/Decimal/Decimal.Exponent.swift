@@ -16,22 +16,6 @@ extension Decimal {
     }
 }
 
-extension Decimal.Exponent: ExpressibleByIntegerLiteral {
-
-    @inlinable
-    public init(integerLiteral value: Int) {
-        self.rawValue = value
-    }
-}
-
-extension Decimal.Exponent: Comparable {
-
-    @inlinable
-    public static func < (lhs: Self, rhs: Self) -> Bool {
-        lhs.rawValue < rhs.rawValue
-    }
-}
-
 extension Decimal.Exponent {
 
     @inlinable
@@ -67,14 +51,6 @@ extension Decimal.Exponent {
     @inlinable
     public static prefix func - (value: Self) -> Self {
         Self(-value.rawValue)
-    }
-}
-
-extension Int {
-
-    @inlinable
-    public init(_ exponent: Decimal.Exponent) {
-        self = exponent.rawValue
     }
 }
 

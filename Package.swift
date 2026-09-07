@@ -13,8 +13,8 @@ let package = Package(
     ],
     products: [
         .library(name: "Decimal", targets: ["Decimal"]),
-        .library(name: "Decimal Standard Library Integration", targets: ["Decimal Standard Library Integration"]),
-        .library(name: "Decimal Foundation Library Integration", targets: ["Decimal Foundation Library Integration"]),
+
+        .library(name: "Decimal Foundation Integration", targets: ["Decimal Foundation Integration"]),
         .library(name: "Decimal Test Support", targets: ["Decimal Test Support"]),
     ],
     dependencies: [],
@@ -25,20 +25,13 @@ let package = Package(
             ],
             path: "Sources/Decimal"
         ),
+        
         .target(
-            name: "Decimal Standard Library Integration",
+            name: "Decimal Foundation Integration",
             dependencies: [
                 .target(name: "Decimal"),
             ],
-            path: "Sources/Decimal Standard Library Integration"
-        ),
-        .target(
-            name: "Decimal Foundation Library Integration",
-            dependencies: [
-                .target(name: "Decimal"),
-                .target(name: "Decimal Standard Library Integration"),
-            ],
-            path: "Sources/Decimal Foundation Library Integration"
+            path: "Sources/Decimal Foundation Integration"
         ),
         .target(
             name: "Decimal Test Support",
@@ -52,8 +45,7 @@ let package = Package(
             dependencies: [
                 .target(name: "Decimal"),
                 .target(name: "Decimal Test Support"),
-                .target(name: "Decimal Standard Library Integration"),
-                .target(name: "Decimal Foundation Library Integration"),
+                .target(name: "Decimal Foundation Integration"),
             ],
             path: "Tests/Decimal Tests"
         ),
