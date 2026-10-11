@@ -1,4 +1,4 @@
-extension Swift.Int32 {
+extension Swift::Int32 {
 
     public init?(exactly value: Decimal.Format32) {
 

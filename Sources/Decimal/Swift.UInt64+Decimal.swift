@@ -1,4 +1,4 @@
-extension Swift.UInt64 {
+extension Swift::UInt64 {
 
     public init?(exactly value: Decimal.Format64) {
 
@@ -48,7 +48,7 @@ extension Swift.UInt64 {
     }
 }
 
-extension Swift.UInt64 {
+extension Swift::UInt64 {
 
     public init?(exactly value: Decimal.Format128) {
 

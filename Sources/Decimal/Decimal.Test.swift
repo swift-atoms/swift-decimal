@@ -11,7 +11,7 @@ extension Decimal {
     }
 }
 
-extension Decimal.Test: Swift.Sendable where Value: Swift.Sendable {}
+extension Decimal.Test: Swift::Sendable where Value: Swift::Sendable {}
 
 extension Decimal.Layout {
 

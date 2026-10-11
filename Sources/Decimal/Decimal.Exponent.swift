@@ -56,42 +56,48 @@ extension Decimal.Exponent {
 
 extension Decimal.Exponent {
 
-    public enum Format32 {
+    public enum Format32 {}
 
-        public static let max: Decimal.Exponent = 90
+    public enum Format64 {}
 
-        public static let min: Decimal.Exponent = -101
+    public enum Format128 {}
+}
 
-        public static let bias: Int = 101
+extension Decimal.Exponent.Format32 {
 
-        public static let scientificMax: Decimal.Exponent = 96
+    public static let max: Decimal.Exponent = 90
 
-        public static let scientificMin: Decimal.Exponent = -95
-    }
+    public static let min: Decimal.Exponent = -101
 
-    public enum Format64 {
+    public static let bias: Int = 101
 
-        public static let max: Decimal.Exponent = 369
+    public static let scientificMax: Decimal.Exponent = 96
 
-        public static let min: Decimal.Exponent = -398
+    public static let scientificMin: Decimal.Exponent = -95
+}
 
-        public static let bias: Int = 398
+extension Decimal.Exponent.Format64 {
 
-        public static let scientificMax: Decimal.Exponent = 384
+    public static let max: Decimal.Exponent = 369
 
-        public static let scientificMin: Decimal.Exponent = -383
-    }
+    public static let min: Decimal.Exponent = -398
 
-    public enum Format128 {
+    public static let bias: Int = 398
 
-        public static let max: Decimal.Exponent = 6111
+    public static let scientificMax: Decimal.Exponent = 384
 
-        public static let min: Decimal.Exponent = -6176
+    public static let scientificMin: Decimal.Exponent = -383
+}
 
-        public static let bias: Int = 6176
+extension Decimal.Exponent.Format128 {
 
-        public static let scientificMax: Decimal.Exponent = 6144
+    public static let max: Decimal.Exponent = 6111
 
-        public static let scientificMin: Decimal.Exponent = -6143
-    }
+    public static let min: Decimal.Exponent = -6176
+
+    public static let bias: Int = 6176
+
+    public static let scientificMax: Decimal.Exponent = 6144
+
+    public static let scientificMin: Decimal.Exponent = -6143
 }

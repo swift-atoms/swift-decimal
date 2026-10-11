@@ -1,4 +1,4 @@
-extension Decimal.Precision: Swift.Comparable {
+extension Decimal.Precision: Swift::Comparable {
 
     @inlinable
     public static func < (lhs: Self, rhs: Self) -> Bool {
