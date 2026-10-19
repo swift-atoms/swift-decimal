@@ -10,7 +10,7 @@ import Testing
     }
 
     @Test func `Decimal64 negative zero preserves its zero classification and sign`() {
-        let negZero = Decimal.Format64.zero(sign: .negative)
+        let negZero = Decimal.Format64.zero(sign: .minus)
         #expect(negZero.test.zero)
         #expect(negZero.test.negative)
     }
@@ -22,7 +22,7 @@ import Testing
     }
 
     @Test func `Decimal64 negative infinity preserves its infinite classification and sign`() {
-        let negInf = Decimal.Format64.infinity(sign: .negative)
+        let negInf = Decimal.Format64.infinity(sign: .minus)
         #expect(negInf.test.infinite)
         #expect(negInf.test.negative)
     }

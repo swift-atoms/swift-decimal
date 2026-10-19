@@ -21,22 +21,21 @@ let package = Package(
     targets: [
         .target(
             name: "Decimal",
-            dependencies: [
-            ],
+            dependencies: [],
             path: "Sources/Decimal"
         ),
-        
+
         .target(
             name: "Decimal Foundation Integration",
             dependencies: [
-                .target(name: "Decimal"),
+                .target(name: "Decimal")
             ],
             path: "Sources/Decimal Foundation Integration"
         ),
         .target(
             name: "Decimal Test Support",
             dependencies: [
-                .target(name: "Decimal"),
+                .target(name: "Decimal")
             ],
             path: "Tests/Support"
         ),
@@ -53,14 +52,15 @@ let package = Package(
 )
 
 for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
-    target.swiftSettings = (target.swiftSettings ?? []) + [
-        .strictMemorySafety(),
-        .enableUpcomingFeature("ExistentialAny"),
-        .enableUpcomingFeature("InternalImportsByDefault"),
-        .enableUpcomingFeature("MemberImportVisibility"),
-        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
-        .enableUpcomingFeature("InferIsolatedConformances"),
-        .enableExperimentalFeature("Lifetimes"),
-        .treatAllWarnings(as: .error),
-    ]
+    target.swiftSettings =
+        (target.swiftSettings ?? []) + [
+            .strictMemorySafety(),
+            .enableUpcomingFeature("ExistentialAny"),
+            .enableUpcomingFeature("InternalImportsByDefault"),
+            .enableUpcomingFeature("MemberImportVisibility"),
+            .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+            .enableUpcomingFeature("InferIsolatedConformances"),
+            .enableExperimentalFeature("Lifetimes"),
+            .treatAllWarnings(as: .error),
+        ]
 }

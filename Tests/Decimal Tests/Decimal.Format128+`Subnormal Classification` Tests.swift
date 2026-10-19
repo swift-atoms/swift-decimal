@@ -16,7 +16,7 @@ extension Decimal.Format128.`Decimal128 classification distinguishes zero normal
         let coefficient = UInt128(1_000_000_000_000_000_000) * UInt128(1_000_000_000_000_000)
 
         let value = Decimal.Format128.encode(
-            sign: .positive,
+            sign: .plus,
             exponent: Decimal.Format128.minExponent,
             coefficient: coefficient
         )
@@ -27,7 +27,7 @@ extension Decimal.Format128.`Decimal128 classification distinguishes zero normal
         let coefficient = UInt128(1_000_000_000_000_000_000) * UInt128(100_000_000_000_000)
 
         let value = Decimal.Format128.encode(
-            sign: .positive,
+            sign: .plus,
             exponent: Decimal.Format128.minExponent,
             coefficient: coefficient
         )
@@ -36,7 +36,7 @@ extension Decimal.Format128.`Decimal128 classification distinguishes zero normal
 
     @Test func `A unit coefficient is subnormal at the minimum quantum exponent`() {
         let value = Decimal.Format128.encode(
-            sign: .positive,
+            sign: .plus,
             exponent: Decimal.Format128.minExponent,
             coefficient: 1
         )

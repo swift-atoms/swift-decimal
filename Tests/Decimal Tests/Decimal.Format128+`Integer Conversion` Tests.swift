@@ -19,7 +19,7 @@ extension Decimal.Format128.`Decimal128 integer conversions preserve representab
 
     @Test func `Directly encoded negative coefficients recover Int64 minimum`() {
         let magnitude = UInt128(UInt64(Int64.max)) + 1
-        let encoded = Decimal.Format128.encode(sign: .negative, exponent: 0, coefficient: magnitude)
+        let encoded = Decimal.Format128.encode(sign: .minus, exponent: 0, coefficient: magnitude)
         #expect(Int64(exactly: encoded) == Int64.min)
     }
 }

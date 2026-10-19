@@ -23,16 +23,16 @@ extension Decimal.Format64: Decimal.Layout {
 
 extension Decimal.Format64 {
     @usableFromInline
-    internal static func canonical(zero sign: Decimal.Sign) -> Self {
+    internal static func canonical(zero sign: FloatingPointSign) -> Self {
 
-        let signBit: UInt64 = sign == .negative ? 0x8000_0000_0000_0000 : 0
+        let signBit: UInt64 = sign == .minus ? 0x8000_0000_0000_0000 : 0
         return Self(bits: signBit | 0x31C0_0000_0000_0000)
     }
 
     @usableFromInline
-    internal static func canonical(infinity sign: Decimal.Sign) -> Self {
+    internal static func canonical(infinity sign: FloatingPointSign) -> Self {
 
-        let signBit: UInt64 = sign == .negative ? 0x8000_0000_0000_0000 : 0
+        let signBit: UInt64 = sign == .minus ? 0x8000_0000_0000_0000 : 0
         return Self(bits: signBit | 0x7800_0000_0000_0000)
     }
 
@@ -44,11 +44,11 @@ extension Decimal.Format64 {
         return Self(bits: base | (payload.value & payloadMask))
     }
 
-    public static func zero(sign: Decimal.Sign = .positive) -> Self {
+    public static func zero(sign: FloatingPointSign = .plus) -> Self {
         canonical(zero: sign)
     }
 
-    public static func infinity(sign: Decimal.Sign = .positive) -> Self {
+    public static func infinity(sign: FloatingPointSign = .plus) -> Self {
         canonical(infinity: sign)
     }
 
@@ -82,8 +82,8 @@ extension Decimal.Format64 {
         )
     }
 
-    public var sign: Decimal.Sign {
-        (bits & 0x8000_0000_0000_0000) != 0 ? .negative : .positive
+    public var sign: FloatingPointSign {
+        (bits & 0x8000_0000_0000_0000) != 0 ? .minus : .plus
     }
 
     public var negated: Self {
@@ -138,11 +138,11 @@ extension Decimal.Format64 {
 
     @inlinable
     public static func encode(
-        sign: Decimal.Sign,
+        sign: FloatingPointSign,
         exponent: Decimal.Exponent,
         coefficient: UInt64
     ) -> Self {
-        let signBit: UInt64 = sign == .negative ? 0x8000_0000_0000_0000 : 0
+        let signBit: UInt64 = sign == .minus ? 0x8000_0000_0000_0000 : 0
         let biasedExponent = UInt64(Int(exponent) + bias)
 
         guard coefficient < (1 << 53) else {

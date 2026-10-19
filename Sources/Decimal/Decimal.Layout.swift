@@ -12,6 +12,6 @@ extension Decimal {
 
         var classification: Class { get }
 
-        var sign: Sign { get }
+        var sign: FloatingPointSign { get }
     }
 }

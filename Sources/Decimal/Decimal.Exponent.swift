@@ -49,6 +49,16 @@ extension Decimal.Exponent {
     }
 
     @inlinable
+    public static func -= (lhs: inout Self, rhs: Self) {
+        lhs = lhs - rhs
+    }
+
+    @inlinable
+    public static func -= (lhs: inout Self, rhs: Int) {
+        lhs = lhs - rhs
+    }
+
+    @inlinable
     public static prefix func - (value: Self) -> Self {
         Self(-value.rawValue)
     }

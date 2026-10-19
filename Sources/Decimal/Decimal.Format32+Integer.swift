@@ -6,7 +6,7 @@ extension Decimal.Format32 {
             return
         }
 
-        let sign: Decimal.Sign = value < 0 ? .negative : .positive
+        let sign: FloatingPointSign = value < 0 ? .minus : .plus
         var coefficient = value.magnitude
         var exponent = 0
 
@@ -39,7 +39,7 @@ extension Decimal.Format32 {
         }
 
         self = Self.encode(
-            sign: .positive,
+            sign: .plus,
             exponent: Decimal.Exponent(exponent),
             coefficient: coefficient
         )

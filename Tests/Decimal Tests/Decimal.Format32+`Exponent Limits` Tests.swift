@@ -23,7 +23,7 @@ extension Decimal.Format32.`Decimal32 quantum exponents respect encoding bounds`
         let exponent = Decimal.Exponent(90)
         let coefficient: UInt32 = 1234
         let encoded = Decimal.Format32.encode(
-            sign: .positive,
+            sign: .plus,
             exponent: exponent,
             coefficient: coefficient
         )

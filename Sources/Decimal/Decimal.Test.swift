@@ -44,7 +44,7 @@ extension Decimal.Test where Value: Decimal.Layout {
     }
 
     public var negative: Bool {
-        base.sign == .negative
+        base.sign == .minus
     }
 
     public var normal: Bool {
