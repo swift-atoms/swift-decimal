@@ -6,7 +6,7 @@ extension Decimal.Format128 {
             return
         }
 
-        let sign: Decimal.Sign = value < 0 ? .negative : .positive
+        let sign: FloatingPointSign = value < 0 ? .minus : .plus
 
         self = Self.encode(sign: sign, exponent: 0, coefficient: UInt128(value.magnitude))
     }
@@ -17,6 +17,6 @@ extension Decimal.Format128 {
             return
         }
 
-        self = Self.encode(sign: .positive, exponent: 0, coefficient: UInt128(value))
+        self = Self.encode(sign: .plus, exponent: 0, coefficient: UInt128(value))
     }
 }

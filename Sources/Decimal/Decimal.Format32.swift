@@ -23,13 +23,13 @@ extension Decimal.Format32: Decimal.Layout {
 
 extension Decimal.Format32 {
 
-    public static func zero(sign: Decimal.Sign = .positive) -> Self {
-        let signBit: UInt32 = sign == .negative ? 0x8000_0000 : 0
+    public static func zero(sign: FloatingPointSign = .plus) -> Self {
+        let signBit: UInt32 = sign == .minus ? 0x8000_0000 : 0
         return Self(bits: signBit | 0x3200_0000)
     }
 
-    public static func infinity(sign: Decimal.Sign = .positive) -> Self {
-        let signBit: UInt32 = sign == .negative ? 0x8000_0000 : 0
+    public static func infinity(sign: FloatingPointSign = .plus) -> Self {
+        let signBit: UInt32 = sign == .minus ? 0x8000_0000 : 0
         return Self(bits: signBit | 0x7800_0000)
     }
 
@@ -62,8 +62,8 @@ extension Decimal.Format32 {
         )
     }
 
-    public var sign: Decimal.Sign {
-        (bits & 0x8000_0000) != 0 ? .negative : .positive
+    public var sign: FloatingPointSign {
+        (bits & 0x8000_0000) != 0 ? .minus : .plus
     }
 
     public var negated: Self {
@@ -118,11 +118,11 @@ extension Decimal.Format32 {
 
     @inlinable
     public static func encode(
-        sign: Decimal.Sign,
+        sign: FloatingPointSign,
         exponent: Decimal.Exponent,
         coefficient: UInt32
     ) -> Self {
-        let signBit: UInt32 = sign == .negative ? 0x8000_0000 : 0
+        let signBit: UInt32 = sign == .minus ? 0x8000_0000 : 0
         let biasedExponent = UInt32(Int(exponent) + bias)
 
         guard coefficient < (1 << 23) else {

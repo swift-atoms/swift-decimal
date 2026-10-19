@@ -26,13 +26,13 @@ extension Decimal.Format128: Decimal.Layout {
 
 extension Decimal.Format128 {
 
-    public static func zero(sign: Decimal.Sign = .positive) -> Self {
-        let signBit: UInt64 = sign == .negative ? 0x8000_0000_0000_0000 : 0
+    public static func zero(sign: FloatingPointSign = .plus) -> Self {
+        let signBit: UInt64 = sign == .minus ? 0x8000_0000_0000_0000 : 0
         return Self(high: signBit | 0x3040_0000_0000_0000, low: 0)
     }
 
-    public static func infinity(sign: Decimal.Sign = .positive) -> Self {
-        let signBit: UInt64 = sign == .negative ? 0x8000_0000_0000_0000 : 0
+    public static func infinity(sign: FloatingPointSign = .plus) -> Self {
+        let signBit: UInt64 = sign == .minus ? 0x8000_0000_0000_0000 : 0
         return Self(high: signBit | 0x7800_0000_0000_0000, low: 0)
     }
 
@@ -64,8 +64,8 @@ extension Decimal.Format128 {
         )
     }
 
-    public var sign: Decimal.Sign {
-        (high & 0x8000_0000_0000_0000) != 0 ? .negative : .positive
+    public var sign: FloatingPointSign {
+        (high & 0x8000_0000_0000_0000) != 0 ? .minus : .plus
     }
 
     public var negated: Self {
@@ -120,11 +120,11 @@ extension Decimal.Format128 {
 
     @inlinable
     public static func encode(
-        sign: Decimal.Sign,
+        sign: FloatingPointSign,
         exponent: Decimal.Exponent,
         coefficient: UInt128
     ) -> Self {
-        let signBit: UInt64 = sign == .negative ? 0x8000_0000_0000_0000 : 0
+        let signBit: UInt64 = sign == .minus ? 0x8000_0000_0000_0000 : 0
         let biasedExponent = UInt64(Int(exponent) + bias)
 
         let coeffHigh = UInt64(coefficient >> 64)

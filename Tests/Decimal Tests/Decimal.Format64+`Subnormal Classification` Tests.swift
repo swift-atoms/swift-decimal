@@ -14,7 +14,7 @@ extension Decimal.Format64.`Decimal64 classification distinguishes zero normal a
 
     @Test func `The normal coefficient threshold remains normal at the minimum quantum exponent`() {
         let value = Decimal.Format64.encode(
-            sign: .positive,
+            sign: .plus,
             exponent: Decimal.Format64.minExponent,
             coefficient: 1_000_000_000_000_000
         )
@@ -24,7 +24,7 @@ extension Decimal.Format64.`Decimal64 classification distinguishes zero normal a
 
     @Test func `Reduced coefficients classify as subnormal at the minimum quantum exponent`() {
         let value = Decimal.Format64.encode(
-            sign: .positive,
+            sign: .plus,
             exponent: Decimal.Format64.minExponent,
             coefficient: 999_999_999_999_999
         )
@@ -34,7 +34,7 @@ extension Decimal.Format64.`Decimal64 classification distinguishes zero normal a
 
     @Test func `A unit coefficient is subnormal at the minimum quantum exponent`() {
         let value = Decimal.Format64.encode(
-            sign: .positive,
+            sign: .plus,
             exponent: Decimal.Format64.minExponent,
             coefficient: 1
         )
@@ -43,7 +43,7 @@ extension Decimal.Format64.`Decimal64 classification distinguishes zero normal a
 
     @Test func `The normal coefficient threshold remains normal above the minimum exponent`() {
         let value = Decimal.Format64.encode(
-            sign: .positive,
+            sign: .plus,
             exponent: Decimal.Format64.minExponent + 1,
             coefficient: 1_000_000_000_000_000
         )

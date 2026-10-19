@@ -40,7 +40,7 @@ extension Decimal.Format128.`Decimal128 BID encoding preserves finite coefficien
 
         for coefficient in coefficients {
             let encoded = Decimal.Format128.encode(
-                sign: .positive,
+                sign: .plus,
                 exponent: exponent,
                 coefficient: coefficient
             )

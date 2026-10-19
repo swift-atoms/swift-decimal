@@ -17,7 +17,7 @@ extension Decimal.Format64.`Decimal64 BID encoding preserves finite coefficients
         let exponent = Decimal.Exponent(202)
         let coefficient = Decimal.Format64.coefficientMax()
         let encoded = Decimal.Format64.encode(
-            sign: .positive,
+            sign: .plus,
             exponent: exponent,
             coefficient: coefficient
         )
@@ -39,7 +39,7 @@ extension Decimal.Format64.`Decimal64 BID encoding preserves finite coefficients
 
         for coefficient in coefficients {
             let encoded = Decimal.Format64.encode(
-                sign: .positive,
+                sign: .plus,
                 exponent: exponent,
                 coefficient: coefficient
             )
