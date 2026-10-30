@@ -16,8 +16,13 @@ let package = Package(
 
         .library(name: "Decimal Foundation Integration", targets: ["Decimal Foundation Integration"]),
         .library(name: "Decimal Test Support", targets: ["Decimal Test Support"]),
+        .library(name: "Decimals", targets: ["Decimals"]),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/swift-atoms/swift-ascii.git", branch: "main", traits: ["Serializer"]),
+        .package(url: "https://github.com/swift-atoms/swift-rounding.git", branch: "main"),
+        .package(url: "https://github.com/swift-atoms/swift-division.git", branch: "main"),
+    ],
     targets: [
         .target(
             name: "Decimal",
@@ -46,6 +51,22 @@ let package = Package(
                 .target(name: "Decimal Test Support"),
             ],
             path: "Tests/Decimal Tests"
+        ),
+        .target(
+            name: "Decimals",
+            dependencies: [
+                .target(name: "Decimal"),
+                .product(name: "ASCII", package: "swift-ascii"),
+                .product(name: "Rounding", package: "swift-rounding"),
+                .product(name: "Division", package: "swift-division"),
+            ]
+        ),
+        .testTarget(
+            name: "Decimals Tests",
+            dependencies: [
+                .target(name: "Decimals"),
+                .product(name: "Rounding", package: "swift-rounding"),
+            ]
         ),
     ],
     swiftLanguageModes: [.v6]
