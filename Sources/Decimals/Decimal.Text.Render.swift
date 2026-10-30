@@ -50,7 +50,7 @@ extension Decimal.Text where Value == Decimal.Format64 {
 
         var digitCodes: [ASCII.Code] = []
         ASCII.Decimal.Serializer().serialize(coefficient, into: &digitCodes)
-        let digits: [UInt8] = digitCodes.map(\.underlying)
+        let digits: [UInt8] = digitCodes.map { $0.underlying }
 
         let numDigits = digits.count
         let adjustedExponent = exponent.rawValue + numDigits - 1
@@ -298,7 +298,7 @@ extension Decimal.Text where Value == Decimal.Format32 {
 
         var digitCodes: [ASCII.Code] = []
         ASCII.Decimal.Serializer().serialize(coefficient, into: &digitCodes)
-        let digits: [UInt8] = digitCodes.map(\.underlying)
+        let digits: [UInt8] = digitCodes.map { $0.underlying }
 
         let numDigits = digits.count
         let adjustedExponent = exponent.rawValue + numDigits - 1
@@ -536,7 +536,7 @@ extension Decimal.Text where Value == Decimal.Format128 {
 
         var digitCodes: [ASCII.Code] = []
         ASCII.Decimal.Serializer().serialize(coefficient, into: &digitCodes)
-        let digits: [UInt8] = digitCodes.map(\.underlying)
+        let digits: [UInt8] = digitCodes.map { $0.underlying }
 
         let numDigits = digits.count
         let adjustedExponent = exponent.rawValue + numDigits - 1
