@@ -79,6 +79,7 @@ extension Decimal.Text.Parse where Value == Decimal.Format64 {
         var hasDigits = false
         var decimalPos: Int? = nil
         var digitCount = 0
+        var sticky = false
 
         while index < bytes.count {
             let byte = unsafe bytes[index]
@@ -95,6 +96,10 @@ extension Decimal.Text.Parse where Value == Decimal.Format64 {
                     coefficient = coefficient * 10 + digit
                     digitCount += 1
                 } else {
+                    // Record a nonzero dropped digit so rounding sees it.
+                    if digit != 0 {
+                        sticky = true
+                    }
 
                     if decimalPos == nil {
                         exponent += 1
@@ -176,6 +181,12 @@ extension Decimal.Text.Parse where Value == Decimal.Format64 {
         }
 
         if coefficient == 0 {
+            if Decimal.Exponent(exponent) > context.maxExponent {
+                throw .high
+            }
+            if Decimal.Exponent(exponent) < context.minExponent {
+                throw .low
+            }
             return .zero(sign: sign)
         }
 
@@ -184,7 +195,8 @@ extension Decimal.Text.Parse where Value == Decimal.Format64 {
             exponent: Decimal.Exponent(exponent),
             sign: sign,
             rounding: context.rounding,
-            precision: context.precision
+            precision: context.precision,
+            sticky: sticky
         )
 
         if roundedExponent > context.maxExponent {
@@ -301,6 +313,7 @@ extension Decimal.Text.Parse where Value == Decimal.Format32 {
         var hasDigits = false
         var decimalPos: Int? = nil
         var digitCount = 0
+        var sticky = false
 
         while index < bytes.count {
             let byte = unsafe bytes[index]
@@ -317,6 +330,10 @@ extension Decimal.Text.Parse where Value == Decimal.Format32 {
                     coefficient = coefficient * 10 + digit
                     digitCount += 1
                 } else {
+                    // Record a nonzero dropped digit so rounding sees it.
+                    if digit != 0 {
+                        sticky = true
+                    }
                     if decimalPos == nil {
                         exponent += 1
                     }
@@ -397,6 +414,12 @@ extension Decimal.Text.Parse where Value == Decimal.Format32 {
         }
 
         if coefficient == 0 {
+            if Decimal.Exponent(exponent) > context.maxExponent {
+                throw .high
+            }
+            if Decimal.Exponent(exponent) < context.minExponent {
+                throw .low
+            }
             return .zero(sign: sign)
         }
 
@@ -405,7 +428,8 @@ extension Decimal.Text.Parse where Value == Decimal.Format32 {
             exponent: Decimal.Exponent(exponent),
             sign: sign,
             rounding: context.rounding,
-            precision: context.precision
+            precision: context.precision,
+            sticky: sticky
         )
 
         if roundedExponent > context.maxExponent {
@@ -522,6 +546,7 @@ extension Decimal.Text.Parse where Value == Decimal.Format128 {
         var hasDigits = false
         var decimalPos: Int? = nil
         var digitCount = 0
+        var sticky = false
 
         while index < bytes.count {
             let byte = unsafe bytes[index]
@@ -538,6 +563,10 @@ extension Decimal.Text.Parse where Value == Decimal.Format128 {
                     coefficient = coefficient * 10 + digit
                     digitCount += 1
                 } else {
+                    // Record a nonzero dropped digit so rounding sees it.
+                    if digit != 0 {
+                        sticky = true
+                    }
                     if decimalPos == nil {
                         exponent += 1
                     }
@@ -618,6 +647,12 @@ extension Decimal.Text.Parse where Value == Decimal.Format128 {
         }
 
         if coefficient == 0 {
+            if Decimal.Exponent(exponent) > context.maxExponent {
+                throw .high
+            }
+            if Decimal.Exponent(exponent) < context.minExponent {
+                throw .low
+            }
             return .zero(sign: sign)
         }
 
@@ -626,7 +661,8 @@ extension Decimal.Text.Parse where Value == Decimal.Format128 {
             exponent: Decimal.Exponent(exponent),
             sign: sign,
             rounding: context.rounding,
-            precision: context.precision
+            precision: context.precision,
+            sticky: sticky
         )
 
         if roundedExponent > context.maxExponent {
