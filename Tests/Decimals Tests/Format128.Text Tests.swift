@@ -118,7 +118,7 @@ extension Decimal.Format128.Test {
             let expected = Decimal.Format128.encode(
                 sign: .plus,
                 exponent: Decimal.Exponent(5),
-                coefficient: 1234567890123456789012345678901235
+                coefficient: 1_234_567_890_123_456_789_012_345_678_901_235
             )
             #expect(value == expected)
         }
@@ -130,7 +130,7 @@ extension Decimal.Format128.Test {
             let expected = Decimal.Format128.encode(
                 sign: .plus,
                 exponent: Decimal.Exponent(-33),
-                coefficient: 1000000000000000000000000000000001
+                coefficient: 1_000_000_000_000_000_000_000_000_000_000_001
             )
             #expect(value == expected)
         }

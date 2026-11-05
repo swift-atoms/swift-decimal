@@ -232,7 +232,7 @@ extension Decimal.Format64.Test {
             let expected = Decimal.Format64.encode(
                 sign: .plus,
                 exponent: Decimal.Exponent(5),
-                coefficient: 1234567890123457
+                coefficient: 1_234_567_890_123_457
             )
             #expect(value == expected)
         }
@@ -244,7 +244,7 @@ extension Decimal.Format64.Test {
             let expected = Decimal.Format64.encode(
                 sign: .plus,
                 exponent: Decimal.Exponent(-15),
-                coefficient: 1000000000000001
+                coefficient: 1_000_000_000_000_001
             )
             #expect(value == expected)
         }

@@ -116,7 +116,7 @@ extension Decimal.Format32.Test {
             let expected = Decimal.Format32.encode(
                 sign: .plus,
                 exponent: Decimal.Exponent(3),
-                coefficient: 1234565
+                coefficient: 1_234_565
             )
             #expect(value == expected)
         }
@@ -128,7 +128,7 @@ extension Decimal.Format32.Test {
             let expected = Decimal.Format32.encode(
                 sign: .plus,
                 exponent: Decimal.Exponent(-6),
-                coefficient: 1000001
+                coefficient: 1_000_001
             )
             #expect(value == expected)
         }
