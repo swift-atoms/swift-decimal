@@ -113,7 +113,9 @@ extension Decimal.Text where Value == Decimal.Format64 {
 
         case .engineering:
 
-            let engExp = (adjustedExponent / 3) * 3
+            // Round toward negative infinity, so the leading group always
+            // holds one to three digits, also for negative exponents.
+            let engExp = adjustedExponent - ((adjustedExponent % 3) + 3) % 3
             let shift = adjustedExponent - engExp
             let intDigits = shift + 1
 
@@ -355,7 +357,9 @@ extension Decimal.Text where Value == Decimal.Format32 {
             unsafe offset += writeExponent(adjustedExponent, to: buffer, at: offset)
 
         case .engineering:
-            let engExp = (adjustedExponent / 3) * 3
+            // Round toward negative infinity, so the leading group always
+            // holds one to three digits, also for negative exponents.
+            let engExp = adjustedExponent - ((adjustedExponent % 3) + 3) % 3
             let shift = adjustedExponent - engExp
             let intDigits = shift + 1
 
@@ -593,7 +597,9 @@ extension Decimal.Text where Value == Decimal.Format128 {
             unsafe offset += writeExponent(adjustedExponent, to: buffer, at: offset)
 
         case .engineering:
-            let engExp = (adjustedExponent / 3) * 3
+            // Round toward negative infinity, so the leading group always
+            // holds one to three digits, also for negative exponents.
+            let engExp = adjustedExponent - ((adjustedExponent % 3) + 3) % 3
             let shift = adjustedExponent - engExp
             let intDigits = shift + 1
 
