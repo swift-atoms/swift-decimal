@@ -2,7 +2,7 @@ import Testing
 
 @testable import Decimal
 
-extension Decimal.Format64 {
+extension `Decimal.Format64 Tests` {
     @Suite struct `Decimal64 integer conversions preserve representable values` {
         @Suite struct `No Decimal64 integer conversion unit cases are defined` {}
         @Suite struct `Decimal64 integer conversions handle signed boundaries without trapping` {}
@@ -10,7 +10,7 @@ extension Decimal.Format64 {
     }
 }
 
-extension Decimal.Format64.`Decimal64 integer conversions preserve representable values`.`Decimal64 integer conversions handle signed boundaries without trapping` {
+extension `Decimal.Format64 Tests`.`Decimal64 integer conversions preserve representable values`.`Decimal64 integer conversions handle signed boundaries without trapping` {
 
     @Test func `Decimal64 construction rejects an unrepresentable Int64 minimum`() {
         #expect(Decimal.Format64(Int64.min) == nil)

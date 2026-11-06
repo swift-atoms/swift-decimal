@@ -2,7 +2,7 @@ import Testing
 
 @testable import Decimal
 
-extension Decimal.Format64 {
+extension `Decimal.Format64 Tests` {
     @Suite struct `Decimal64 classification distinguishes zero normal and subnormal values` {
         @Suite struct `No Decimal64 subnormal classification unit cases are defined` {}
         @Suite struct `Decimal64 classification follows coefficient and quantum exponent boundaries` {}
@@ -10,7 +10,7 @@ extension Decimal.Format64 {
     }
 }
 
-extension Decimal.Format64.`Decimal64 classification distinguishes zero normal and subnormal values`.`Decimal64 classification follows coefficient and quantum exponent boundaries` {
+extension `Decimal.Format64 Tests`.`Decimal64 classification distinguishes zero normal and subnormal values`.`Decimal64 classification follows coefficient and quantum exponent boundaries` {
 
     @Test func `The normal coefficient threshold remains normal at the minimum quantum exponent`() {
         let value = Decimal.Format64.encode(

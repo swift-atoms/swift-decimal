@@ -3,11 +3,11 @@ import Testing
 
 @testable import Decimals
 
-extension Decimal.Format128 {
+extension `Decimal.Format128 Tests` {
     @Suite struct Test {}
 }
 
-extension Decimal.Format128.Test {
+extension `Decimal.Format128 Tests`.Test {
     @Suite struct Text {
 
         @Test

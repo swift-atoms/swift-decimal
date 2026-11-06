@@ -2,7 +2,9 @@ import Testing
 
 @testable import Decimals
 
-extension Decimal.Format64 {
+enum `Decimal.Format64 Tests` {}
+
+extension `Decimal.Format64 Tests` {
     @Suite struct Test {
 
         @Test func `addition Basic`() {
@@ -136,7 +138,7 @@ extension Decimal.Format64 {
     }
 }
 
-extension Decimal.Format64.Test {
+extension `Decimal.Format64 Tests`.Test {
     @Suite struct `Edge Case` {
 
         @Test func `addition does not overflow coefficient scaling at large exponent difference`() {

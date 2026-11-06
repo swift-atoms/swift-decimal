@@ -2,7 +2,9 @@ import Testing
 
 @testable import Decimals
 
-extension Decimal.Format128 {
+enum `Decimal.Format128 Tests` {}
+
+extension `Decimal.Format128 Tests` {
     @Suite struct FloatingPoint {
         func value(_ coefficient: UInt128, _ exponent: Int, _ sign: FloatingPointSign = .plus) -> Decimal.Format128 {
             .encode(sign: sign, exponent: Decimal.Exponent(exponent), coefficient: coefficient)

@@ -2,7 +2,7 @@ import Testing
 
 @testable import Decimal
 
-extension Decimal.Format32 {
+extension `Decimal.Format32 Tests` {
     @Suite struct `Decimal32 quantum exponents respect encoding bounds` {
         @Suite struct `No Decimal32 exponent bounds unit cases are defined` {}
         @Suite struct `Decimal32 quantum exponent limits govern normalization and round trips` {}
@@ -10,7 +10,7 @@ extension Decimal.Format32 {
     }
 }
 
-extension Decimal.Format32.`Decimal32 quantum exponents respect encoding bounds`.`Decimal32 quantum exponent limits govern normalization and round trips` {
+extension `Decimal.Format32 Tests`.`Decimal32 quantum exponents respect encoding bounds`.`Decimal32 quantum exponent limits govern normalization and round trips` {
 
     @Test func `Published exponent limits match the quantum encoding bounds`() {
         #expect(Decimal.Format32.maxExponent == Decimal.Exponent(90))

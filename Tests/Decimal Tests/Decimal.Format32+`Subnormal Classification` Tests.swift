@@ -2,7 +2,7 @@ import Testing
 
 @testable import Decimal
 
-extension Decimal.Format32 {
+extension `Decimal.Format32 Tests` {
     @Suite struct `Decimal32 classification distinguishes zero normal and subnormal values` {
         @Suite struct `No Decimal32 subnormal classification unit cases are defined` {}
         @Suite struct `Decimal32 classification follows coefficient and quantum exponent boundaries` {}
@@ -10,7 +10,7 @@ extension Decimal.Format32 {
     }
 }
 
-extension Decimal.Format32.`Decimal32 classification distinguishes zero normal and subnormal values`.`Decimal32 classification follows coefficient and quantum exponent boundaries` {
+extension `Decimal.Format32 Tests`.`Decimal32 classification distinguishes zero normal and subnormal values`.`Decimal32 classification follows coefficient and quantum exponent boundaries` {
 
     @Test func `The normal coefficient threshold remains normal at the minimum quantum exponent`() {
         let value = Decimal.Format32.encode(

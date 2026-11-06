@@ -3,7 +3,7 @@ import Testing
 
 @testable import Decimals
 
-extension Decimal.Format32.Test {
+extension `Decimal.Format32 Tests`.Test {
     @Suite struct `Edge Case` {
 
         @Test func `addition does not overflow coefficient scaling at large exponent difference`() {

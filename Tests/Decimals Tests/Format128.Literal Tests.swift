@@ -2,7 +2,7 @@ import Testing
 
 @testable import Decimals
 
-extension Decimal.Format128 {
+extension `Decimal.Format128 Tests` {
     @Suite struct Literal {
         @Test func `every sixty-four bit literal is exact`() {
             let largest = Decimal.Format128(integerLiteral: .max)

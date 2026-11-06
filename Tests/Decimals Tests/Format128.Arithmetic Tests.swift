@@ -2,7 +2,7 @@ import Testing
 
 @testable import Decimals
 
-extension Decimal.Format128.Test {
+extension `Decimal.Format128 Tests`.Test {
     @Suite struct `Edge Case` {
 
         @Test func `division scales a short dividend without overflowing`() {

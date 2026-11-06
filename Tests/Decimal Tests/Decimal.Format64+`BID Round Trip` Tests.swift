@@ -2,7 +2,9 @@ import Testing
 
 @testable import Decimal
 
-extension Decimal.Format64 {
+enum `Decimal.Format64 Tests` {}
+
+extension `Decimal.Format64 Tests` {
     @Suite struct `Decimal64 BID encoding preserves finite coefficients` {
         @Suite struct `No Decimal64 BID encoding unit cases are defined` {}
         @Suite struct `Decimal64 BID round trips preserve coefficients across encoding forms` {}
@@ -10,7 +12,7 @@ extension Decimal.Format64 {
     }
 }
 
-extension Decimal.Format64.`Decimal64 BID encoding preserves finite coefficients`.`Decimal64 BID round trips preserve coefficients across encoding forms` {
+extension `Decimal.Format64 Tests`.`Decimal64 BID encoding preserves finite coefficients`.`Decimal64 BID round trips preserve coefficients across encoding forms` {
 
     @Test func `Finite form two encodings preserve their coefficient and normal classification`() {
 

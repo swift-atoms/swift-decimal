@@ -3,7 +3,7 @@ import Testing
 
 @testable import Decimals
 
-extension Decimal.Format64.Test {
+extension `Decimal.Format64 Tests`.Test {
     @Suite struct Text {
 
         @Test func `parse Integer`() throws {

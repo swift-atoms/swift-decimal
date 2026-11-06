@@ -2,7 +2,7 @@ import Testing
 
 @testable import Decimals
 
-extension Decimal.Format64 {
+extension `Decimal.Format64 Tests` {
     @Suite struct FloatingPoint {
         func value(_ coefficient: UInt64, _ exponent: Int, _ sign: FloatingPointSign = .plus) -> Decimal.Format64 {
             .encode(sign: sign, exponent: Decimal.Exponent(exponent), coefficient: coefficient)

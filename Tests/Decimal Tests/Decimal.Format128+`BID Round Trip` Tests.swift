@@ -2,7 +2,9 @@ import Testing
 
 @testable import Decimal
 
-extension Decimal.Format128 {
+enum `Decimal.Format128 Tests` {}
+
+extension `Decimal.Format128 Tests` {
     @Suite struct `Decimal128 BID encoding preserves finite coefficients` {
         @Suite struct `No Decimal128 BID encoding unit cases are defined` {}
         @Suite struct `Decimal128 BID round trips preserve coefficients across encoding forms` {}
@@ -10,7 +12,7 @@ extension Decimal.Format128 {
     }
 }
 
-extension Decimal.Format128.`Decimal128 BID encoding preserves finite coefficients`.`Decimal128 BID round trips preserve coefficients across encoding forms` {
+extension `Decimal.Format128 Tests`.`Decimal128 BID encoding preserves finite coefficients`.`Decimal128 BID round trips preserve coefficients across encoding forms` {
 
     @Test func `Finite form two encodings preserve their coefficient and normal classification`() {
         let biasedExponent: UInt64 = 6276

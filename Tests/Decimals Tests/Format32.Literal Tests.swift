@@ -2,7 +2,7 @@ import Testing
 
 @testable import Decimals
 
-extension Decimal.Format32 {
+extension `Decimal.Format32 Tests` {
     @Suite struct Literal {
         @Test func `a literal within seven digits is exact`() {
             let value: Decimal.Format32 = 9_999_999

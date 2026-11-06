@@ -2,7 +2,9 @@ import Testing
 
 @testable import Decimal
 
-extension Decimal.Format32 {
+enum `Decimal.Format32 Tests` {}
+
+extension `Decimal.Format32 Tests` {
     @Suite struct `Decimal32 BID encoding preserves finite coefficients` {
         @Suite struct `No Decimal32 BID encoding unit cases are defined` {}
         @Suite struct `Decimal32 BID round trips preserve coefficients across encoding forms` {}
@@ -10,7 +12,7 @@ extension Decimal.Format32 {
     }
 }
 
-extension Decimal.Format32.`Decimal32 BID encoding preserves finite coefficients`.`Decimal32 BID round trips preserve coefficients across encoding forms` {
+extension `Decimal.Format32 Tests`.`Decimal32 BID encoding preserves finite coefficients`.`Decimal32 BID round trips preserve coefficients across encoding forms` {
 
     @Test func `Finite form two encodings preserve their coefficient and normal classification`() {
 
