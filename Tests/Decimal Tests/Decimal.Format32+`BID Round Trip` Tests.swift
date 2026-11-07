@@ -6,10 +6,15 @@ enum `Decimal.Format32 Tests` {}
 
 extension `Decimal.Format32 Tests` {
     @Suite struct `Decimal32 BID encoding preserves finite coefficients` {
-        @Suite struct `No Decimal32 BID encoding unit cases are defined` {}
-        @Suite struct `Decimal32 BID round trips preserve coefficients across encoding forms` {}
-        @Suite struct `No Decimal32 BID encoding integration cases are defined` {}
     }
+}
+
+extension `Decimal.Format32 Tests`.`Decimal32 BID encoding preserves finite coefficients` {
+    @Suite struct `No Decimal32 BID encoding unit cases are defined` {}
+
+    @Suite struct `Decimal32 BID round trips preserve coefficients across encoding forms` {}
+
+    @Suite struct `No Decimal32 BID encoding integration cases are defined` {}
 }
 
 extension `Decimal.Format32 Tests`.`Decimal32 BID encoding preserves finite coefficients`.`Decimal32 BID round trips preserve coefficients across encoding forms` {

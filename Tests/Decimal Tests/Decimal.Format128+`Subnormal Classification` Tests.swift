@@ -4,10 +4,15 @@ import Testing
 
 extension `Decimal.Format128 Tests` {
     @Suite struct `Decimal128 classification distinguishes zero normal and subnormal values` {
-        @Suite struct `No Decimal128 subnormal classification unit cases are defined` {}
-        @Suite struct `Decimal128 classification follows coefficient and quantum exponent boundaries` {}
-        @Suite struct `No Decimal128 subnormal classification integration cases are defined` {}
     }
+}
+
+extension `Decimal.Format128 Tests`.`Decimal128 classification distinguishes zero normal and subnormal values` {
+    @Suite struct `No Decimal128 subnormal classification unit cases are defined` {}
+
+    @Suite struct `Decimal128 classification follows coefficient and quantum exponent boundaries` {}
+
+    @Suite struct `No Decimal128 subnormal classification integration cases are defined` {}
 }
 
 extension `Decimal.Format128 Tests`.`Decimal128 classification distinguishes zero normal and subnormal values`.`Decimal128 classification follows coefficient and quantum exponent boundaries` {

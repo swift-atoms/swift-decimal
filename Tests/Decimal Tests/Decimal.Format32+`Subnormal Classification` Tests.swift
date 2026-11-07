@@ -4,10 +4,15 @@ import Testing
 
 extension `Decimal.Format32 Tests` {
     @Suite struct `Decimal32 classification distinguishes zero normal and subnormal values` {
-        @Suite struct `No Decimal32 subnormal classification unit cases are defined` {}
-        @Suite struct `Decimal32 classification follows coefficient and quantum exponent boundaries` {}
-        @Suite struct `No Decimal32 subnormal classification integration cases are defined` {}
     }
+}
+
+extension `Decimal.Format32 Tests`.`Decimal32 classification distinguishes zero normal and subnormal values` {
+    @Suite struct `No Decimal32 subnormal classification unit cases are defined` {}
+
+    @Suite struct `Decimal32 classification follows coefficient and quantum exponent boundaries` {}
+
+    @Suite struct `No Decimal32 subnormal classification integration cases are defined` {}
 }
 
 extension `Decimal.Format32 Tests`.`Decimal32 classification distinguishes zero normal and subnormal values`.`Decimal32 classification follows coefficient and quantum exponent boundaries` {

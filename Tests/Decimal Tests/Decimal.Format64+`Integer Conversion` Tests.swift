@@ -4,10 +4,15 @@ import Testing
 
 extension `Decimal.Format64 Tests` {
     @Suite struct `Decimal64 integer conversions preserve representable values` {
-        @Suite struct `No Decimal64 integer conversion unit cases are defined` {}
-        @Suite struct `Decimal64 integer conversions handle signed boundaries without trapping` {}
-        @Suite struct `No Decimal64 integer conversion integration cases are defined` {}
     }
+}
+
+extension `Decimal.Format64 Tests`.`Decimal64 integer conversions preserve representable values` {
+    @Suite struct `No Decimal64 integer conversion unit cases are defined` {}
+
+    @Suite struct `Decimal64 integer conversions handle signed boundaries without trapping` {}
+
+    @Suite struct `No Decimal64 integer conversion integration cases are defined` {}
 }
 
 extension `Decimal.Format64 Tests`.`Decimal64 integer conversions preserve representable values`.`Decimal64 integer conversions handle signed boundaries without trapping` {

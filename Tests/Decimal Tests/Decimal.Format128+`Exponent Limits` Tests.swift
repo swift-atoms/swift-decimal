@@ -4,10 +4,15 @@ import Testing
 
 extension `Decimal.Format128 Tests` {
     @Suite struct `Decimal128 quantum exponents respect encoding bounds` {
-        @Suite struct `No Decimal128 exponent bounds unit cases are defined` {}
-        @Suite struct `Decimal128 quantum exponent limits govern normalization and round trips` {}
-        @Suite struct `No Decimal128 exponent bounds integration cases are defined` {}
     }
+}
+
+extension `Decimal.Format128 Tests`.`Decimal128 quantum exponents respect encoding bounds` {
+    @Suite struct `No Decimal128 exponent bounds unit cases are defined` {}
+
+    @Suite struct `Decimal128 quantum exponent limits govern normalization and round trips` {}
+
+    @Suite struct `No Decimal128 exponent bounds integration cases are defined` {}
 }
 
 extension `Decimal.Format128 Tests`.`Decimal128 quantum exponents respect encoding bounds`.`Decimal128 quantum exponent limits govern normalization and round trips` {

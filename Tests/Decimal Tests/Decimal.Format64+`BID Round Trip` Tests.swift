@@ -6,10 +6,15 @@ enum `Decimal.Format64 Tests` {}
 
 extension `Decimal.Format64 Tests` {
     @Suite struct `Decimal64 BID encoding preserves finite coefficients` {
-        @Suite struct `No Decimal64 BID encoding unit cases are defined` {}
-        @Suite struct `Decimal64 BID round trips preserve coefficients across encoding forms` {}
-        @Suite struct `No Decimal64 BID encoding integration cases are defined` {}
     }
+}
+
+extension `Decimal.Format64 Tests`.`Decimal64 BID encoding preserves finite coefficients` {
+    @Suite struct `No Decimal64 BID encoding unit cases are defined` {}
+
+    @Suite struct `Decimal64 BID round trips preserve coefficients across encoding forms` {}
+
+    @Suite struct `No Decimal64 BID encoding integration cases are defined` {}
 }
 
 extension `Decimal.Format64 Tests`.`Decimal64 BID encoding preserves finite coefficients`.`Decimal64 BID round trips preserve coefficients across encoding forms` {

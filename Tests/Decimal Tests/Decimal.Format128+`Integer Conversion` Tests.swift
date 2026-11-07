@@ -4,10 +4,15 @@ import Testing
 
 extension `Decimal.Format128 Tests` {
     @Suite struct `Decimal128 integer conversions preserve representable values` {
-        @Suite struct `No Decimal128 integer conversion unit cases are defined` {}
-        @Suite struct `Decimal128 integer conversions handle signed boundaries without trapping` {}
-        @Suite struct `No Decimal128 integer conversion integration cases are defined` {}
     }
+}
+
+extension `Decimal.Format128 Tests`.`Decimal128 integer conversions preserve representable values` {
+    @Suite struct `No Decimal128 integer conversion unit cases are defined` {}
+
+    @Suite struct `Decimal128 integer conversions handle signed boundaries without trapping` {}
+
+    @Suite struct `No Decimal128 integer conversion integration cases are defined` {}
 }
 
 extension `Decimal.Format128 Tests`.`Decimal128 integer conversions preserve representable values`.`Decimal128 integer conversions handle signed boundaries without trapping` {

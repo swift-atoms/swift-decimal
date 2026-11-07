@@ -6,10 +6,15 @@ enum `Decimal.Format128 Tests` {}
 
 extension `Decimal.Format128 Tests` {
     @Suite struct `Decimal128 BID encoding preserves finite coefficients` {
-        @Suite struct `No Decimal128 BID encoding unit cases are defined` {}
-        @Suite struct `Decimal128 BID round trips preserve coefficients across encoding forms` {}
-        @Suite struct `No Decimal128 BID encoding integration cases are defined` {}
     }
+}
+
+extension `Decimal.Format128 Tests`.`Decimal128 BID encoding preserves finite coefficients` {
+    @Suite struct `No Decimal128 BID encoding unit cases are defined` {}
+
+    @Suite struct `Decimal128 BID round trips preserve coefficients across encoding forms` {}
+
+    @Suite struct `No Decimal128 BID encoding integration cases are defined` {}
 }
 
 extension `Decimal.Format128 Tests`.`Decimal128 BID encoding preserves finite coefficients`.`Decimal128 BID round trips preserve coefficients across encoding forms` {

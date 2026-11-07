@@ -4,10 +4,15 @@ import Testing
 
 extension `Decimal.Format64 Tests` {
     @Suite struct `Decimal64 quantum exponents respect encoding bounds` {
-        @Suite struct `No Decimal64 exponent bounds unit cases are defined` {}
-        @Suite struct `Decimal64 quantum exponent limits govern normalization and round trips` {}
-        @Suite struct `No Decimal64 exponent bounds integration cases are defined` {}
     }
+}
+
+extension `Decimal.Format64 Tests`.`Decimal64 quantum exponents respect encoding bounds` {
+    @Suite struct `No Decimal64 exponent bounds unit cases are defined` {}
+
+    @Suite struct `Decimal64 quantum exponent limits govern normalization and round trips` {}
+
+    @Suite struct `No Decimal64 exponent bounds integration cases are defined` {}
 }
 
 extension `Decimal.Format64 Tests`.`Decimal64 quantum exponents respect encoding bounds`.`Decimal64 quantum exponent limits govern normalization and round trips` {
