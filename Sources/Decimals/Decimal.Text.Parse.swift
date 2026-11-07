@@ -96,7 +96,6 @@ extension Decimal.Text.Parse where Value == Decimal.Format64 {
                     coefficient = coefficient * 10 + digit
                     digitCount += 1
                 } else {
-                    // Record a nonzero dropped digit so rounding sees it.
                     if digit != 0 {
                         sticky = true
                     }
@@ -330,7 +329,6 @@ extension Decimal.Text.Parse where Value == Decimal.Format32 {
                     coefficient = coefficient * 10 + digit
                     digitCount += 1
                 } else {
-                    // Record a nonzero dropped digit so rounding sees it.
                     if digit != 0 {
                         sticky = true
                     }
@@ -563,7 +561,6 @@ extension Decimal.Text.Parse where Value == Decimal.Format128 {
                     coefficient = coefficient * 10 + digit
                     digitCount += 1
                 } else {
-                    // Record a nonzero dropped digit so rounding sees it.
                     if digit != 0 {
                         sticky = true
                     }
