@@ -47,3 +47,19 @@ extension Decimal.Precision {
 
     public static let format128: Self = 34
 }
+
+extension Decimal.Precision: Swift::Comparable {
+
+    @inlinable
+    public static func < (lhs: Self, rhs: Self) -> Bool {
+        lhs.rawValue < rhs.rawValue
+    }
+}
+
+extension Decimal.Precision: Swift::ExpressibleByIntegerLiteral {
+
+    @inlinable
+    public init(integerLiteral value: Int) {
+        self.rawValue = value
+    }
+}

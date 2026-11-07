@@ -65,12 +65,6 @@ extension Decimal.Exponent {
 }
 
 extension Decimal.Exponent {
-
-    public enum Format32 {}
-
-    public enum Format64 {}
-
-    public enum Format128 {}
 }
 
 extension Decimal.Exponent.Format32 {
@@ -110,4 +104,20 @@ extension Decimal.Exponent.Format128 {
     public static let scientificMax: Decimal.Exponent = 6144
 
     public static let scientificMin: Decimal.Exponent = -6143
+}
+
+extension Decimal.Exponent: Swift::Comparable {
+
+    @inlinable
+    public static func < (lhs: Self, rhs: Self) -> Bool {
+        lhs.rawValue < rhs.rawValue
+    }
+}
+
+extension Decimal.Exponent: Swift::ExpressibleByIntegerLiteral {
+
+    @inlinable
+    public init(integerLiteral value: Int) {
+        self.rawValue = value
+    }
 }
