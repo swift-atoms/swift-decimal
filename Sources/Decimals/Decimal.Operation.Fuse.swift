@@ -13,12 +13,12 @@ extension Decimal.Operation where Value == Decimal.Format64 {
 
         if x.test.signaling || y.test.signaling || z.test.signaling {
             let payload: Decimal.Payload
-            if x.test.signaling {
-                payload = Decimal.Payload(x.extractCoefficient())
+            payload = if x.test.signaling {
+                Decimal.Payload(x.extractCoefficient())
             } else if y.test.signaling {
-                payload = Decimal.Payload(y.extractCoefficient())
+                Decimal.Payload(y.extractCoefficient())
             } else {
-                payload = Decimal.Payload(z.extractCoefficient())
+                Decimal.Payload(z.extractCoefficient())
             }
             return Decimal.Outcome(value: .nan(kind: .quiet, payload: payload), status: .invalid)
         }
@@ -345,12 +345,12 @@ extension Decimal.Operation where Value == Decimal.Format32 {
 
         if x.test.signaling || y.test.signaling || z.test.signaling {
             let payload: Decimal.Payload
-            if x.test.signaling {
-                payload = Decimal.Payload(UInt64(x.extractCoefficient()))
+            payload = if x.test.signaling {
+                Decimal.Payload(UInt64(x.extractCoefficient()))
             } else if y.test.signaling {
-                payload = Decimal.Payload(UInt64(y.extractCoefficient()))
+                Decimal.Payload(UInt64(y.extractCoefficient()))
             } else {
-                payload = Decimal.Payload(UInt64(z.extractCoefficient()))
+                Decimal.Payload(UInt64(z.extractCoefficient()))
             }
             return Decimal.Outcome(value: .nan(kind: .quiet, payload: payload), status: .invalid)
         }
@@ -676,12 +676,12 @@ extension Decimal.Operation where Value == Decimal.Format128 {
 
         if x.test.signaling || y.test.signaling || z.test.signaling {
             let payload: Decimal.Payload
-            if x.test.signaling {
-                payload = Decimal.Payload(UInt64(truncatingIfNeeded: x.extractCoefficient()))
+            payload = if x.test.signaling {
+                Decimal.Payload(UInt64(truncatingIfNeeded: x.extractCoefficient()))
             } else if y.test.signaling {
-                payload = Decimal.Payload(UInt64(truncatingIfNeeded: y.extractCoefficient()))
+                Decimal.Payload(UInt64(truncatingIfNeeded: y.extractCoefficient()))
             } else {
-                payload = Decimal.Payload(UInt64(truncatingIfNeeded: z.extractCoefficient()))
+                Decimal.Payload(UInt64(truncatingIfNeeded: z.extractCoefficient()))
             }
             return Decimal.Outcome(value: .nan(kind: .quiet, payload: payload), status: .invalid)
         }
