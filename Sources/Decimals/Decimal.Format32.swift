@@ -372,3 +372,32 @@ extension Decimal.Format32 {
         return .encode(sign: resultSign, exponent: Decimal.Exponent(unit), coefficient: UInt32(magnitude))
     }
 }
+
+extension Decimal.Format32 {
+
+    /// Rounds the exact value `coefficient × 10^exponent` into `context`; see `Decimals.Rounding.fit`.
+    static func fitted(
+        sign: FloatingPointSign,
+        coefficient: Decimals.Wide,
+        exponent: Decimal.Exponent,
+        sticky: Bool = false,
+        context: Decimal.Context
+    ) -> Decimal.Outcome<Self> {
+        let (fit, status) = Decimals.Rounding.fit(
+            coefficient: coefficient,
+            exponent: exponent,
+            sign: sign,
+            sticky: sticky,
+            context: context
+        )
+        switch fit {
+        case .infinite:
+            return Decimal.Outcome(value: .infinity(sign: sign), status: status)
+        case .finite(let coefficient, let exponent):
+            return Decimal.Outcome(
+                value: .encode(sign: sign, exponent: exponent, coefficient: UInt32(coefficient)),
+                status: status
+            )
+        }
+    }
+}

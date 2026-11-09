@@ -108,23 +108,12 @@ extension Decimal.Operation where Value == Decimal.Format32 {
             return Decimal.Outcome(value: .zero(sign: zeroSign), status: .none)
         }
 
-        let (finalCoeff, finalExp, status) = Decimals.Rounding.round(
-            coefficient: resultCoeff,
-            exponent: expA,
+        return Value.fitted(
             sign: resultSign,
-            rounding: context.rounding,
-            precision: context.precision
+            coefficient: Decimals.Wide(UInt128(resultCoeff)),
+            exponent: expA,
+            context: context
         )
-
-        if finalExp > context.maxExponent {
-            return Decimal.Outcome(
-                value: .infinity(sign: resultSign),
-                status: status.union(Decimal.Status.overflow)
-            )
-        }
-
-        let result = Value.encode(sign: resultSign, exponent: finalExp, coefficient: finalCoeff)
-        return Decimal.Outcome(value: result, status: status)
     }
 
     public func add(
@@ -249,23 +238,12 @@ extension Decimal.Operation where Value == Decimal.Format64 {
             return Decimal.Outcome(value: .zero(sign: zeroSign), status: .none)
         }
 
-        let (finalCoeff, finalExp, status) = Decimals.Rounding.round(
-            coefficient: resultCoeff,
-            exponent: expA,
+        return Value.fitted(
             sign: resultSign,
-            rounding: context.rounding,
-            precision: context.precision
+            coefficient: Decimals.Wide(resultCoeff),
+            exponent: expA,
+            context: context
         )
-
-        if finalExp > context.maxExponent {
-            return Decimal.Outcome(
-                value: .infinity(sign: resultSign),
-                status: status.union(Decimal.Status.overflow)
-            )
-        }
-
-        let result = Value.encode(sign: resultSign, exponent: finalExp, coefficient: finalCoeff)
-        return Decimal.Outcome(value: result, status: status)
     }
 
     public func add(
@@ -359,46 +337,20 @@ extension Decimal.Operation where Value == Decimal.Format128 {
                     return Decimal.Outcome(value: .zero(sign: zeroSign), status: .none)
                 }
                 let (reduced, shift, sticky) = wideSum.reducedToFitUInt128()
-                let (finalCoeff, finalExp, status) = Decimals.Rounding.round128(
-                    coefficient: reduced,
-                    exponent: expA + shift,
+                return Value.fitted(
                     sign: resultSign,
-                    rounding: context.rounding,
-                    precision: context.precision,
-                    sticky: sticky
-                )
-                if finalExp > context.maxExponent {
-                    return Decimal.Outcome(
-                        value: .infinity(sign: resultSign),
-                        status: status.union(Decimal.Status.overflow)
-                    )
-                }
-                return Decimal.Outcome(
-                    value: Value.encode(
-                        sign: resultSign,
-                        exponent: finalExp,
-                        coefficient: finalCoeff
-                    ),
-                    status: status
+                    coefficient: Decimals.Wide(reduced),
+                    exponent: expA + shift,
+                    sticky: sticky,
+                    context: context
                 )
             }
-            let (finalCoeff, finalExp, status) = Decimals.Rounding.round128(
-                coefficient: coeffB,
-                exponent: expB,
+            return Value.fitted(
                 sign: signB,
-                rounding: context.rounding,
-                precision: context.precision,
-                sticky: true
-            )
-            if finalExp > context.maxExponent {
-                return Decimal.Outcome(
-                    value: .infinity(sign: signB),
-                    status: status.union(Decimal.Status.overflow)
-                )
-            }
-            return Decimal.Outcome(
-                value: Value.encode(sign: signB, exponent: finalExp, coefficient: finalCoeff),
-                status: status
+                coefficient: Decimals.Wide(coeffB),
+                exponent: expB,
+                sticky: true,
+                context: context
             )
         } else if expB < expA {
             let diff = expA - expB
@@ -428,46 +380,20 @@ extension Decimal.Operation where Value == Decimal.Format128 {
                     return Decimal.Outcome(value: .zero(sign: zeroSign), status: .none)
                 }
                 let (reduced, shift, sticky) = wideSum.reducedToFitUInt128()
-                let (finalCoeff, finalExp, status) = Decimals.Rounding.round128(
-                    coefficient: reduced,
-                    exponent: expB + shift,
+                return Value.fitted(
                     sign: resultSign,
-                    rounding: context.rounding,
-                    precision: context.precision,
-                    sticky: sticky
-                )
-                if finalExp > context.maxExponent {
-                    return Decimal.Outcome(
-                        value: .infinity(sign: resultSign),
-                        status: status.union(Decimal.Status.overflow)
-                    )
-                }
-                return Decimal.Outcome(
-                    value: Value.encode(
-                        sign: resultSign,
-                        exponent: finalExp,
-                        coefficient: finalCoeff
-                    ),
-                    status: status
+                    coefficient: Decimals.Wide(reduced),
+                    exponent: expB + shift,
+                    sticky: sticky,
+                    context: context
                 )
             }
-            let (finalCoeff, finalExp, status) = Decimals.Rounding.round128(
-                coefficient: coeffA,
-                exponent: expA,
+            return Value.fitted(
                 sign: signA,
-                rounding: context.rounding,
-                precision: context.precision,
-                sticky: true
-            )
-            if finalExp > context.maxExponent {
-                return Decimal.Outcome(
-                    value: .infinity(sign: signA),
-                    status: status.union(Decimal.Status.overflow)
-                )
-            }
-            return Decimal.Outcome(
-                value: Value.encode(sign: signA, exponent: finalExp, coefficient: finalCoeff),
-                status: status
+                coefficient: Decimals.Wide(coeffA),
+                exponent: expA,
+                sticky: true,
+                context: context
             )
         }
 
@@ -492,23 +418,12 @@ extension Decimal.Operation where Value == Decimal.Format128 {
             return Decimal.Outcome(value: .zero(sign: zeroSign), status: .none)
         }
 
-        let (finalCoeff, finalExp, status) = Decimals.Rounding.round128(
-            coefficient: resultCoeff,
-            exponent: expA,
+        return Value.fitted(
             sign: resultSign,
-            rounding: context.rounding,
-            precision: context.precision
+            coefficient: Decimals.Wide(resultCoeff),
+            exponent: expA,
+            context: context
         )
-
-        if finalExp > context.maxExponent {
-            return Decimal.Outcome(
-                value: .infinity(sign: resultSign),
-                status: status.union(Decimal.Status.overflow)
-            )
-        }
-
-        let result = Value.encode(sign: resultSign, exponent: finalExp, coefficient: finalCoeff)
-        return Decimal.Outcome(value: result, status: status)
     }
 
     public func add(

@@ -1,3 +1,4 @@
+import Rounding
 import Testing
 
 @testable import Decimals
@@ -358,6 +359,62 @@ extension `Decimal.Format128 Tests`.Test {
             #expect(result.value.extractExponent() == Decimal.Exponent(40))
             #expect(result.value == expected)
             #expect(result.status.contains(.inexact))
+        }
+    }
+}
+
+extension `Decimal.Format128 Tests`.Test {
+    @Suite struct `Wide Product` {
+
+        static let largest: UInt128 = 9_999_999_999_999_999_999_999_999_999_999_999
+
+        @Test func `multiplying two 34-digit coefficients rounds the full product`() {
+            let a = Decimal.Format128.encode(sign: .plus, exponent: 0, coefficient: Self.largest)
+            let result = a.operation.multiply(a)
+            #expect(result.value == .encode(sign: .plus, exponent: 34, coefficient: Self.largest - 1))
+            #expect(result.status == .inexact)
+        }
+
+        @Test func `fusing two 34-digit coefficients rounds the full product plus the addend`() {
+            let a = Decimal.Format128.encode(sign: .plus, exponent: 0, coefficient: Self.largest)
+            let one = Decimal.Format128.encode(sign: .plus, exponent: 0, coefficient: 1)
+            let result = a.operation.fuse(a, one)
+            #expect(result.value == .encode(sign: .plus, exponent: 34, coefficient: Self.largest - 1))
+            #expect(result.status == .inexact)
+        }
+    }
+}
+
+extension `Decimal.Format128 Tests`.Test {
+    @Suite struct `Overflow And Underflow` {
+
+        @Test func `overflow toward zero gives the greatest finite value`() {
+            var context = Decimal.Context.format128
+            context.rounding = .zero
+            let result = Decimal.Format128.greatestFiniteMagnitude.operation.multiply(10, context: context)
+            #expect(result.value == .greatestFiniteMagnitude)
+            #expect(result.status == [.overflow, .inexact])
+        }
+
+        @Test func `overflow to nearest gives infinity`() {
+            let result = Decimal.Format128.greatestFiniteMagnitude.operation.multiply(10)
+            #expect(result.value == .infinity)
+            #expect(result.status == [.overflow, .inexact])
+        }
+
+        @Test func `a product below the least exponent rounds to a subnormal`() {
+            let tiny = Decimal.Format128.encode(sign: .plus, exponent: -6176, coefficient: 15)
+            let tenth = Decimal.Format128.encode(sign: .plus, exponent: -1, coefficient: 1)
+            let result = tiny.operation.multiply(tenth)
+            #expect(result.value == .encode(sign: .plus, exponent: -6176, coefficient: 2))
+            #expect(result.status == [.underflow, .inexact])
+        }
+
+        @Test func `a quotient below the least exponent rounds to a subnormal`() {
+            let tiny = Decimal.Format128.encode(sign: .plus, exponent: -6176, coefficient: 3)
+            let result = tiny.operation.divide(2)
+            #expect(result.value == .encode(sign: .plus, exponent: -6176, coefficient: 2))
+            #expect(result.status == [.underflow, .inexact])
         }
     }
 }

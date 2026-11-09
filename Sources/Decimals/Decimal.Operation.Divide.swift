@@ -73,37 +73,13 @@ extension Decimal.Operation where Value == Decimal.Format32 {
 
         let resultExp = expA - expB
 
-        var status: Decimal.Status = .none
-        if remainder != 0 {
-            status = .inexact
-        }
-
-        let (finalCoeff, finalExp, roundStatus) = Decimals.Rounding.round(
-            coefficient: quotient,
-            exponent: resultExp,
+        return Value.fitted(
             sign: resultSign,
-            rounding: context.rounding,
-            precision: context.precision,
-            sticky: remainder != 0
+            coefficient: Decimals.Wide(UInt128(quotient)),
+            exponent: resultExp,
+            sticky: remainder != 0,
+            context: context
         )
-        status = status.union(roundStatus)
-
-        if finalExp > context.maxExponent {
-            return Decimal.Outcome(
-                value: .infinity(sign: resultSign),
-                status: status.union(Decimal.Status.overflow)
-            )
-        }
-
-        if finalExp < context.minExponent {
-            return Decimal.Outcome(
-                value: .zero(sign: resultSign),
-                status: status.union(Decimal.Status.underflow)
-            )
-        }
-
-        let result = Value.encode(sign: resultSign, exponent: finalExp, coefficient: finalCoeff)
-        return Decimal.Outcome(value: result, status: status)
     }
 
     public func divide(
@@ -191,37 +167,13 @@ extension Decimal.Operation where Value == Decimal.Format64 {
 
         let resultExp = expA - expB
 
-        var status: Decimal.Status = .none
-        if remainder != 0 {
-            status = .inexact
-        }
-
-        let (finalCoeff, finalExp, roundStatus) = Decimals.Rounding.round(
-            coefficient: quotient,
-            exponent: resultExp,
+        return Value.fitted(
             sign: resultSign,
-            rounding: context.rounding,
-            precision: context.precision,
-            sticky: remainder != 0
+            coefficient: Decimals.Wide(quotient),
+            exponent: resultExp,
+            sticky: remainder != 0,
+            context: context
         )
-        status = status.union(roundStatus)
-
-        if finalExp > context.maxExponent {
-            return Decimal.Outcome(
-                value: .infinity(sign: resultSign),
-                status: status.union(Decimal.Status.overflow)
-            )
-        }
-
-        if finalExp < context.minExponent {
-            return Decimal.Outcome(
-                value: .zero(sign: resultSign),
-                status: status.union(Decimal.Status.underflow)
-            )
-        }
-
-        let result = Value.encode(sign: resultSign, exponent: finalExp, coefficient: finalCoeff)
-        return Decimal.Outcome(value: result, status: status)
     }
 
     public func divide(
@@ -301,42 +253,17 @@ extension Decimal.Operation where Value == Decimal.Format128 {
             expA -= scaleUp
         }
 
-        let (wideQuotient, remainder) = dividend.divided(by: coeffB)
-        let (quotient, shift, truncated) = wideQuotient.reducedToFitUInt128()
+        let (quotient, remainder) = dividend.divided(by: coeffB)
 
-        let resultExp = expA - expB + Decimal.Exponent(shift)
+        let resultExp = expA - expB
 
-        var status: Decimal.Status = .none
-        if remainder != 0 || truncated {
-            status = .inexact
-        }
-
-        let (finalCoeff, finalExp, roundStatus) = Decimals.Rounding.round128(
+        return Value.fitted(
+            sign: resultSign,
             coefficient: quotient,
             exponent: resultExp,
-            sign: resultSign,
-            rounding: context.rounding,
-            precision: context.precision,
-            sticky: remainder != 0 || truncated
+            sticky: remainder != 0,
+            context: context
         )
-        status = status.union(roundStatus)
-
-        if finalExp > context.maxExponent {
-            return Decimal.Outcome(
-                value: .infinity(sign: resultSign),
-                status: status.union(Decimal.Status.overflow)
-            )
-        }
-
-        if finalExp < context.minExponent {
-            return Decimal.Outcome(
-                value: .zero(sign: resultSign),
-                status: status.union(Decimal.Status.underflow)
-            )
-        }
-
-        let result = Value.encode(sign: resultSign, exponent: finalExp, coefficient: finalCoeff)
-        return Decimal.Outcome(value: result, status: status)
     }
 
     public func divide(

@@ -1,3 +1,6 @@
+import Rounding
+
+
 extension Decimals {
 
     struct Wide: Sendable, Hashable {
@@ -129,5 +132,93 @@ extension Decimals.Wide {
 
     init(_ product: (high: UInt128, low: UInt128)) {
         self.init(high: product.high, low: product.low)
+    }
+}
+
+extension Decimals.Wide {
+
+    var digitCount: Int {
+        var digits = 0
+        var value = self
+        while !value.isZero {
+            value = value.dividedBy10().quotient
+            digits += 1
+        }
+        return digits
+    }
+
+    /// Drops the lowest `count` decimal digits, reporting how the dropped part compares to half a unit of the
+    /// last kept digit (`nil` when nothing nonzero was dropped). `sticky` marks a nonzero part below this value.
+    func droppingDigits(
+        _ count: Int,
+        sticky: Bool
+    ) -> (quotient: Self, fractionComparedToHalf: Order.Comparison?) {
+        guard count > 0 else {
+            return (self, sticky ? .less : nil)
+        }
+        var value = self
+        var leading: UInt128 = 0
+        var rest = sticky
+        for _ in 0..<count {
+            if value.isZero {
+                rest = rest || leading != 0
+                leading = 0
+                continue
+            }
+            let (quotient, remainder) = value.dividedBy10()
+            rest = rest || leading != 0
+            leading = remainder
+            value = quotient
+        }
+        let comparison: Order.Comparison? =
+            if leading > 5 || (leading == 5 && rest) {
+                .greater
+            } else if leading == 5 {
+                .equal
+            } else if leading != 0 || rest {
+                .less
+            } else {
+                nil
+            }
+        return (value, comparison)
+    }
+}
+
+extension Decimals.Wide {
+
+    /// The sum of two signed values `coefficient × 10^exponent`, exact or with a sticky part.
+    ///
+    /// When the exponents are too far apart for the aligned sum to fit, the operand with the smaller exponent is
+    /// truncated and `sticky` marks the dropped part. The returned coefficient then has at least 75 digits, so
+    /// rounding it to any decimal precision drops a digit and the sticky part only breaks ties. A subtraction
+    /// with a sticky part borrows one unit, so the sticky part is always added.
+    static func sum(
+        _ a: (sign: FloatingPointSign, coefficient: Self, exponent: Decimal.Exponent),
+        _ b: (sign: FloatingPointSign, coefficient: Self, exponent: Decimal.Exponent)
+    ) -> (sign: FloatingPointSign, coefficient: Self, exponent: Decimal.Exponent, sticky: Bool) {
+        let (high, low) = a.exponent >= b.exponent ? (a, b) : (b, a)
+        let difference = (high.exponent - low.exponent).rawValue
+        let room = Swift.max(76 - high.coefficient.digitCount, 0)
+        let scale = Swift.min(difference, room)
+        let scaled = multiplied(high.coefficient, byPowerOf10: scale)
+
+        var lowPart = low.coefficient
+        var sticky = false
+        for _ in 0..<(difference - scale) {
+            guard !lowPart.isZero else { break }
+            let (quotient, remainder) = lowPart.dividedBy10()
+            sticky = sticky || remainder != 0
+            lowPart = quotient
+        }
+        let exponent = high.exponent - scale
+
+        if high.sign == low.sign {
+            return (high.sign, scaled.adding(lowPart), exponent, sticky)
+        }
+        if scaled >= lowPart {
+            let difference = scaled.subtracting(lowPart)
+            return (high.sign, sticky ? difference.subtracting(Self(1)) : difference, exponent, sticky)
+        }
+        return (low.sign, lowPart.subtracting(scaled), exponent, sticky)
     }
 }

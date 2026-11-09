@@ -45,33 +45,12 @@ extension Decimal.Operation where Value == Decimal.Format32 {
         let expA = a.extractExponent()
         let expB = b.extractExponent()
 
-        let resultCoeff = coeffA * coeffB
-        let resultExp = expA + expB
-
-        let (finalCoeff, finalExp, status) = Decimals.Rounding.round(
-            coefficient: resultCoeff,
-            exponent: resultExp,
+        return Value.fitted(
             sign: resultSign,
-            rounding: context.rounding,
-            precision: context.precision
+            coefficient: Decimals.Wide(UInt128(coeffA) * UInt128(coeffB)),
+            exponent: expA + expB,
+            context: context
         )
-
-        if finalExp > context.maxExponent {
-            return Decimal.Outcome(
-                value: .infinity(sign: resultSign),
-                status: status.union(Decimal.Status.overflow)
-            )
-        }
-
-        if finalExp < context.minExponent {
-            return Decimal.Outcome(
-                value: .zero(sign: resultSign),
-                status: status.union(Decimal.Status.underflow)
-            )
-        }
-
-        let result = Value.encode(sign: resultSign, exponent: finalExp, coefficient: finalCoeff)
-        return Decimal.Outcome(value: result, status: status)
     }
 
     public func multiply(
@@ -130,34 +109,12 @@ extension Decimal.Operation where Value == Decimal.Format64 {
         let expA = a.extractExponent()
         let expB = b.extractExponent()
 
-        let resultCoeff = coeffA * coeffB
-        let resultExp = expA + expB
-
-        let (finalCoeff, finalExp, status) = Decimals.Rounding.round(
-            coefficient: resultCoeff,
-            exponent: resultExp,
+        return Value.fitted(
             sign: resultSign,
-            rounding: context.rounding,
-            precision: context.precision
+            coefficient: Decimals.Wide(coeffA * coeffB),
+            exponent: expA + expB,
+            context: context
         )
-
-        if finalExp > context.maxExponent {
-            return Decimal.Outcome(
-                value: .infinity(sign: resultSign),
-                status: status.union(Decimal.Status.overflow)
-            )
-        }
-
-        if finalExp < context.minExponent {
-
-            return Decimal.Outcome(
-                value: .zero(sign: resultSign),
-                status: status.union(Decimal.Status.underflow)
-            )
-        }
-
-        let result = Value.encode(sign: resultSign, exponent: finalExp, coefficient: finalCoeff)
-        return Decimal.Outcome(value: result, status: status)
     }
 
     public func multiply(
@@ -215,33 +172,12 @@ extension Decimal.Operation where Value == Decimal.Format128 {
         let expA = a.extractExponent()
         let expB = b.extractExponent()
 
-        let resultCoeff = coeffA * coeffB
-        let resultExp = expA + expB
-
-        let (finalCoeff, finalExp, status) = Decimals.Rounding.round128(
-            coefficient: resultCoeff,
-            exponent: resultExp,
+        return Value.fitted(
             sign: resultSign,
-            rounding: context.rounding,
-            precision: context.precision
+            coefficient: Decimals.Wide(coeffA.multipliedFullWidth(by: coeffB)),
+            exponent: expA + expB,
+            context: context
         )
-
-        if finalExp > context.maxExponent {
-            return Decimal.Outcome(
-                value: .infinity(sign: resultSign),
-                status: status.union(Decimal.Status.overflow)
-            )
-        }
-
-        if finalExp < context.minExponent {
-            return Decimal.Outcome(
-                value: .zero(sign: resultSign),
-                status: status.union(Decimal.Status.underflow)
-            )
-        }
-
-        let result = Value.encode(sign: resultSign, exponent: finalExp, coefficient: finalCoeff)
-        return Decimal.Outcome(value: result, status: status)
     }
 
     public func multiply(

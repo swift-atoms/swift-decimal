@@ -1,3 +1,4 @@
+import Rounding
 import Testing
 
 @testable import Decimals
@@ -342,6 +343,73 @@ extension `Decimal.Format64 Tests`.Test {
             #expect(result.value != x)
             #expect(result.value == expected)
             #expect(result.status.contains(.inexact))
+        }
+    }
+}
+
+extension `Decimal.Format64 Tests`.Test {
+    @Suite struct `Overflow And Underflow` {
+
+        @Test func `overflow follows the rounding direction`() {
+            var context = Decimal.Context.format64
+            context.rounding = .down
+            let positive = Decimal.Format64.greatestFiniteMagnitude.operation.multiply(10, context: context)
+            #expect(positive.value == .greatestFiniteMagnitude)
+            #expect(positive.status == [.overflow, .inexact])
+            let negative = (-Decimal.Format64.greatestFiniteMagnitude).operation.multiply(10, context: context)
+            #expect(negative.value == -.infinity)
+            #expect(negative.status == [.overflow, .inexact])
+        }
+
+        @Test func `overflow of a sum toward zero gives the greatest finite value`() {
+            var context = Decimal.Context.format64
+            context.rounding = .zero
+            let max = Decimal.Format64.greatestFiniteMagnitude
+            let result = max.operation.add(max, context: context)
+            #expect(result.value == max)
+            #expect(result.status == [.overflow, .inexact])
+        }
+
+        @Test func `a product below the least exponent rounds to a subnormal`() {
+            let tiny = Decimal.Format64.encode(sign: .plus, exponent: -398, coefficient: 15)
+            let tenth = Decimal.Format64.encode(sign: .plus, exponent: -1, coefficient: 1)
+            let result = tiny.operation.multiply(tenth)
+            #expect(result.value == .encode(sign: .plus, exponent: -398, coefficient: 2))
+            #expect(result.status == [.underflow, .inexact])
+        }
+
+        @Test func `a product far below the least exponent rounds to zero`() {
+            let tiny = Decimal.Format64.leastNonzeroMagnitude
+            let result = tiny.operation.multiply(tiny)
+            #expect(result.value == .zero)
+            #expect(result.value.sign == .plus)
+            #expect(result.status == [.underflow, .inexact])
+        }
+
+        @Test func `an exact subnormal product raises nothing`() {
+            let tiny = Decimal.Format64.encode(sign: .plus, exponent: -397, coefficient: 4)
+            let tenth = Decimal.Format64.encode(sign: .plus, exponent: -1, coefficient: 1)
+            let result = tiny.operation.multiply(tenth)
+            #expect(result.value == .encode(sign: .plus, exponent: -398, coefficient: 4))
+            #expect(result.status == .none)
+        }
+
+        @Test func `a fused result below the least exponent rounds instead of trapping`() {
+            let tiny = Decimal.Format64.leastNonzeroMagnitude
+            let tenth = Decimal.Format64.encode(sign: .plus, exponent: -1, coefficient: 1)
+            let result = tiny.operation.fuse(tenth, tiny)
+            #expect(result.value == tiny)
+            #expect(result.status == [.underflow, .inexact])
+        }
+
+        @Test func `a fused sum with a far smaller opposite addend rounds toward zero`() {
+            var context = Decimal.Context.format64
+            context.rounding = .zero
+            let one = Decimal.Format64(integerLiteral: 1)
+            let tiny = Decimal.Format64.encode(sign: .minus, exponent: -100, coefficient: 1)
+            let result = one.operation.fuse(one, tiny, context: context)
+            #expect(result.value == .encode(sign: .plus, exponent: -16, coefficient: 9_999_999_999_999_999))
+            #expect(result.status == .inexact)
         }
     }
 }
