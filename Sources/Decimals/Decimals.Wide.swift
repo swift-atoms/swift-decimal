@@ -1,6 +1,5 @@
 import Rounding
 
-
 extension Decimals {
 
     struct Wide: Sendable, Hashable {
