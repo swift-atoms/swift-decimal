@@ -55,8 +55,9 @@ extension Decimal.Format32 {
             }
         }
 
+        let coefficient = extractCoefficient()
         return Decimal.Class.classifyFinite(
-            coefficient: extractCoefficient(),
+            coefficient: coefficient <= Self.coefficientMax() ? coefficient : 0,
             exponent: extractExponent(),
             scientificMin: Decimal.Exponent.Format32.scientificMin
         )

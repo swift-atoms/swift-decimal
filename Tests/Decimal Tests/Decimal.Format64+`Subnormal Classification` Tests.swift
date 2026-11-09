@@ -55,3 +55,16 @@ extension `Decimal.Format64 Tests`.`Decimal64 classification distinguishes zero 
         #expect(value.classification == .normal)
     }
 }
+
+extension `Decimal.Format64 Tests` {
+    @Suite struct `Non-canonical Classification` {
+
+        @Test func `A coefficient above the maximum classifies as zero, as equality treats it`() {
+            let value = Decimal.Format64(bits: 0x6000_0000_0000_0000 | (398 << 51) | 0x0007_FFFF_FFFF_FFFF)
+            #expect(value.extractCoefficient() > Decimal.Format64.coefficientMax())
+            #expect(value.classification == .zero)
+            #expect(value.test.zero)
+            #expect(value == .zero())
+        }
+    }
+}

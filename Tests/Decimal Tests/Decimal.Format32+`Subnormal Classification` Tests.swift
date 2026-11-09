@@ -53,3 +53,16 @@ extension `Decimal.Format32 Tests`.`Decimal32 classification distinguishes zero 
         #expect(value.classification == .subnormal)
     }
 }
+
+extension `Decimal.Format32 Tests` {
+    @Suite struct `Non-canonical Classification` {
+
+        @Test func `A coefficient above the maximum classifies as zero, as equality treats it`() {
+            let value = Decimal.Format32(bits: 0x6000_0000 | (101 << 21) | 0x001F_FFFF)
+            #expect(value.extractCoefficient() > Decimal.Format32.coefficientMax())
+            #expect(value.classification == .zero)
+            #expect(value.test.zero)
+            #expect(value == .zero())
+        }
+    }
+}

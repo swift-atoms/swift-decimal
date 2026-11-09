@@ -54,3 +54,16 @@ extension `Decimal.Format128 Tests`.`Decimal128 classification distinguishes zer
         #expect(!value.test.subnormal)
     }
 }
+
+extension `Decimal.Format128 Tests` {
+    @Suite struct `Non-canonical Classification` {
+
+        @Test func `A coefficient above the maximum classifies as zero, as equality treats it`() {
+            let value = Decimal.Format128(high: 0x6000_0000_0000_0000 | (6176 << 46), low: 0)
+            #expect(value.extractCoefficient() > Decimal.Format128.coefficientMax())
+            #expect(value.classification == .zero)
+            #expect(value.test.zero)
+            #expect(value == .zero())
+        }
+    }
+}

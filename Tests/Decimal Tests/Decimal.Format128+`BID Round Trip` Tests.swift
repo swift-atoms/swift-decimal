@@ -19,7 +19,7 @@ extension `Decimal.Format128 Tests`.`Decimal128 BID encoding preserves finite co
 
 extension `Decimal.Format128 Tests`.`Decimal128 BID encoding preserves finite coefficients`.`Decimal128 BID round trips preserve coefficients across encoding forms` {
 
-    @Test func `Finite form two encodings preserve their coefficient and normal classification`() {
+    @Test func `Finite form two encodings preserve their coefficient and classify as zero, being above the maximum`() {
         let biasedExponent: UInt64 = 6276
         let g0g1: UInt64 = 0b11 << 61
         let g2: UInt64 = 0b1 << 60
@@ -31,7 +31,8 @@ extension `Decimal.Format128 Tests`.`Decimal128 BID encoding preserves finite co
         let expectedCoefficient =
             (UInt128(coeffHighMasked | (UInt64(8) << 46)) << 64) | UInt128(low)
 
-        #expect(value.classification == .normal)
+        #expect(expectedCoefficient > Decimal.Format128.coefficientMax())
+        #expect(value.classification == .zero)
         #expect(!value.test.infinite)
         #expect(!value.test.nan)
         #expect(value.extractExponent() == Decimal.Exponent(100))
