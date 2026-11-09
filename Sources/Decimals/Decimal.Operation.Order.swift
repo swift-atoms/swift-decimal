@@ -27,7 +27,7 @@ extension Decimal.Operation where Value == Decimal.Format32 {
         if baseClass == .zero && otherClass == .zero {
             if baseNeg && !otherNeg { return .less }
             if !baseNeg && otherNeg { return .greater }
-            return .equal
+            return cohortOrder(other)
         }
 
         if baseClass == .quiet || baseClass == .signaling {
@@ -41,7 +41,7 @@ extension Decimal.Operation where Value == Decimal.Format32 {
         let cmp = compare(other)
         switch cmp {
         case .less: return .less
-        case .equal: return .equal
+        case .equal: return cohortOrder(other)
         case .greater: return .greater
         case .unordered: return .equal
         }
@@ -81,7 +81,7 @@ extension Decimal.Operation where Value == Decimal.Format64 {
         if baseClass == .zero && otherClass == .zero {
             if baseNeg && !otherNeg { return .less }
             if !baseNeg && otherNeg { return .greater }
-            return .equal
+            return cohortOrder(other)
         }
 
         if baseClass == .quiet || baseClass == .signaling {
@@ -95,7 +95,7 @@ extension Decimal.Operation where Value == Decimal.Format64 {
         let cmp = compare(other)
         switch cmp {
         case .less: return .less
-        case .equal: return .equal
+        case .equal: return cohortOrder(other)
         case .greater: return .greater
         case .unordered: return .equal
         }
@@ -135,7 +135,7 @@ extension Decimal.Operation where Value == Decimal.Format128 {
         if baseClass == .zero && otherClass == .zero {
             if baseNeg && !otherNeg { return .less }
             if !baseNeg && otherNeg { return .greater }
-            return .equal
+            return cohortOrder(other)
         }
 
         if baseClass == .quiet || baseClass == .signaling {
@@ -150,7 +150,7 @@ extension Decimal.Operation where Value == Decimal.Format128 {
         let cmp = compare(other)
         switch cmp {
         case .less: return .less
-        case .equal: return .equal
+        case .equal: return cohortOrder(other)
         case .greater: return .greater
         case .unordered: return .equal
         }
@@ -158,5 +158,41 @@ extension Decimal.Operation where Value == Decimal.Format128 {
 
     public func precedes(_ other: Value) -> Bool {
         order(other) == .less
+    }
+}
+
+extension Decimal.Operation where Value == Decimal.Format32 {
+
+    /// IEEE 754 §5.10 totalOrder for two encodings of the same value: a positive value with the smaller exponent
+    /// comes first, a negative value with the larger exponent comes first.
+    private func cohortOrder(_ other: Value) -> Decimal.Order {
+        let baseExponent = base.extractExponent()
+        let otherExponent = other.extractExponent()
+        guard baseExponent != otherExponent else { return .equal }
+        return (baseExponent < otherExponent) != base.test.negative ? .less : .greater
+    }
+}
+
+extension Decimal.Operation where Value == Decimal.Format64 {
+
+    /// IEEE 754 §5.10 totalOrder for two encodings of the same value: a positive value with the smaller exponent
+    /// comes first, a negative value with the larger exponent comes first.
+    private func cohortOrder(_ other: Value) -> Decimal.Order {
+        let baseExponent = base.extractExponent()
+        let otherExponent = other.extractExponent()
+        guard baseExponent != otherExponent else { return .equal }
+        return (baseExponent < otherExponent) != base.test.negative ? .less : .greater
+    }
+}
+
+extension Decimal.Operation where Value == Decimal.Format128 {
+
+    /// IEEE 754 §5.10 totalOrder for two encodings of the same value: a positive value with the smaller exponent
+    /// comes first, a negative value with the larger exponent comes first.
+    private func cohortOrder(_ other: Value) -> Decimal.Order {
+        let baseExponent = base.extractExponent()
+        let otherExponent = other.extractExponent()
+        guard baseExponent != otherExponent else { return .equal }
+        return (baseExponent < otherExponent) != base.test.negative ? .less : .greater
     }
 }

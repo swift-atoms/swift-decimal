@@ -82,6 +82,18 @@ extension `Decimal.Format32 Tests` {
             #expect(Decimal.Format32(1) < 2)
         }
 
+        @Test func `total order sorts members of a cohort by exponent`() {
+            let one = value(1, 0)
+            let onePointZeroZero = value(100, -2)
+            #expect(one == onePointZeroZero)
+            #expect(onePointZeroZero.operation.order(one) == .less)
+            #expect(one.operation.order(onePointZeroZero) == .greater)
+            #expect(!one.isTotallyOrdered(belowOrEqualTo: onePointZeroZero))
+            #expect(value(1, 0, .minus).operation.order(value(100, -2, .minus)) == .less)
+            #expect(value(0, -2).operation.order(value(0, 0)) == .less)
+            #expect(one.operation.order(one) == .equal)
+        }
+
         @Test func `generic floating-point code accepts decimals`() {
             func half<T: Swift.FloatingPoint>(_ value: T) -> T { value / 2 }
             #expect(half(Decimal.Format32(3)) == value(15, -1))
