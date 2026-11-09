@@ -143,6 +143,11 @@ extension Decimal.Format64 {
         exponent: Decimal.Exponent,
         coefficient: UInt64
     ) -> Self {
+        precondition(coefficient <= coefficientMax(), "coefficient above the format's maximum")
+        precondition(
+            exponent >= minExponent && exponent <= maxExponent,
+            "exponent outside the format's quantum exponent range"
+        )
         let signBit: UInt64 = sign == .minus ? 0x8000_0000_0000_0000 : 0
         let biasedExponent = UInt64(Int(exponent) + bias)
 

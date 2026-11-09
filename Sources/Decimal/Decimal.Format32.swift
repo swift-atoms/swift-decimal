@@ -123,6 +123,11 @@ extension Decimal.Format32 {
         exponent: Decimal.Exponent,
         coefficient: UInt32
     ) -> Self {
+        precondition(coefficient <= coefficientMax(), "coefficient above the format's maximum")
+        precondition(
+            exponent >= minExponent && exponent <= maxExponent,
+            "exponent outside the format's quantum exponent range"
+        )
         let signBit: UInt32 = sign == .minus ? 0x8000_0000 : 0
         let biasedExponent = UInt32(Int(exponent) + bias)
 

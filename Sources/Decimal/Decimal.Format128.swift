@@ -125,19 +125,16 @@ extension Decimal.Format128 {
         exponent: Decimal.Exponent,
         coefficient: UInt128
     ) -> Self {
+        precondition(coefficient <= coefficientMax(), "coefficient above the format's maximum")
+        precondition(
+            exponent >= minExponent && exponent <= maxExponent,
+            "exponent outside the format's quantum exponent range"
+        )
         let signBit: UInt64 = sign == .minus ? 0x8000_0000_0000_0000 : 0
         let biasedExponent = UInt64(Int(exponent) + bias)
 
         let coeffHigh = UInt64(coefficient >> 64)
         let coeffLow = UInt64(truncatingIfNeeded: coefficient)
-
-        guard coeffHigh < (1 << 49) else {
-
-            let form2Marker: UInt64 = 0x6000_0000_0000_0000
-            let coeffHighMasked = coeffHigh & 0x0000_3FFF_FFFF_FFFF
-            let highPart = signBit | form2Marker | (biasedExponent << 46) | coeffHighMasked
-            return Self(high: highPart, low: coeffLow)
-        }
 
         let highPart = signBit | (biasedExponent << 49) | coeffHigh
         return Self(high: highPart, low: coeffLow)
