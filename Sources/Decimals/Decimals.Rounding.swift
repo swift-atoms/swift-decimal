@@ -269,11 +269,15 @@ extension Decimals.Rounding {
     /// IEEE 754 §7.4: rounding to nearest and rounding away from zero overflow to infinity; rounding toward zero,
     /// or toward the infinity of the opposite sign, gives the greatest finite magnitude.
     static func overflowsToInfinity(sign: FloatingPointSign, rounding: Rounding::Rounding) -> Bool {
-        (try? rounding.incrementsMagnitude(
-            isNegative: sign == .minus,
-            integralPartIsOdd: true,
-            fractionComparedToHalf: .greater
-        )) ?? true
+        do {
+            return try rounding.incrementsMagnitude(
+                isNegative: sign == .minus,
+                integralPartIsOdd: true,
+                fractionComparedToHalf: .greater
+            )
+        } catch {
+            return true
+        }
     }
 
     /// The greatest finite coefficient at `precision`, `10^precision - 1`.
@@ -314,12 +318,16 @@ extension Decimals.Rounding {
         let (quotient, comparison) = coefficient.droppingDigits(drop, sticky: sticky)
         var result = quotient
         var resultExponent = exponent + drop
-        let roundUp =
-            (try? context.rounding.incrementsMagnitude(
+        let roundUp: Bool
+        do {
+            roundUp = try context.rounding.incrementsMagnitude(
                 isNegative: sign == .minus,
                 integralPartIsOdd: quotient.low & 1 == 1,
                 fractionComparedToHalf: comparison
-            )) ?? false
+            )
+        } catch {
+            roundUp = false
+        }
         if roundUp {
             result = result.adding(Decimals.Wide(1))
             if result > Decimals.Wide(greatestCoefficient(precision: context.precision)) {

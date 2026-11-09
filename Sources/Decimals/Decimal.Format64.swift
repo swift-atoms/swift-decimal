@@ -389,6 +389,7 @@ extension Decimal.Format64 {
         switch fit {
         case .infinite:
             return Decimal.Outcome(value: .infinity(sign: sign), status: status)
+
         case .finite(let coefficient, let exponent):
             return Decimal.Outcome(
                 value: .encode(sign: sign, exponent: exponent, coefficient: UInt64(coefficient)),
